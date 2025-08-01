@@ -8,15 +8,18 @@ public class RaceDrawing : MonoBehaviour
 
     [SerializeField] private InputActionReference _mousePosition;
     [SerializeField] private InputActionReference _leftMouse;
-    [SerializeField] private Material _lineMaterial;
+    [SerializeField] private Material _drawMaterial;
+    [SerializeField] private Material _targetMaterial;
+    [SerializeField] private CanvasRenderer _drawRenderer;
+    [SerializeField] private CanvasRenderer _targetRenderer;
 
-    private CanvasRenderer _renderer;
-    private Mesh _mesh;
+    private Mesh _drawMesh;
+    private Mesh _targetMesh;
     private Vector2 _lastMousePosition;
 
-    private void Awake()
+    private void Start()
     {
-        _renderer = GetComponent<CanvasRenderer>();
+        CreateTargetLine();
     }
 
     private void Update()
@@ -25,21 +28,69 @@ public class RaceDrawing : MonoBehaviour
         ContinueLine();
     }
 
+
+    private void CreateTargetLine()
+    {
+        float borderSize = 500;
+
+        Vector2 point = new Vector2(
+            Random.Range(borderSize, 1920 - borderSize),
+            Random.Range(borderSize, 1080 - borderSize));
+
+        float currentAngle = Random.Range(0f, 360f);
+        float rotationAmount = Random.Range(3f, 7f);
+        float stepSize = Random.Range(10f, 20f);
+
+        Vector2 drift = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
+
+        int numSteps = Random.Range(70, 150);
+
+        _targetMesh = StartMesh(point, _targetMesh, _targetMaterial, _targetRenderer);
+        for (int i = 0; i < numSteps; i++)
+        {
+            Vector2 previousPoint = point;
+            point += Rotate(new Vector2(0f, stepSize), currentAngle) + drift;
+            ContinueMesh(point, _targetMesh, _targetRenderer, previousPoint);
+
+            Debug.Log(point);
+
+            currentAngle += rotationAmount;
+        }
+    }
+
     private void StartNewLine()
     {
         if (!_leftMouse.action.WasPressedThisFrame()) return;
 
-        Vector2 mousePosition = _mousePosition.action.ReadValue<Vector2>();
+        Vector2 mousePosition = GetMousePosition();
         _lastMousePosition = mousePosition;
 
+        _drawMesh = StartMesh(mousePosition, _drawMesh, _drawMaterial, _drawRenderer);
+    }
+
+    private void ContinueLine()
+    {
+        if (!_leftMouse.action.IsPressed()) return;
+
+        Vector2 mousePosition = GetMousePosition();
+        float distanceFromLastPoint = Vector2.Distance(mousePosition, _lastMousePosition);
+        if (distanceFromLastPoint < LineVertexFrequency) return;
+
+        ContinueMesh(mousePosition, _drawMesh, _drawRenderer, _lastMousePosition);
+
+        _lastMousePosition = mousePosition;
+    }
+
+    private Mesh StartMesh(Vector2 point, Mesh lineMesh, Material material, CanvasRenderer renderer)
+    {
         Vector3[] vertices = new Vector3[4];
         Vector2[] uvs = new Vector2[4];
         int[] triangles = new int[6];
 
-        vertices[0] = new Vector3(mousePosition.x, mousePosition.y);
-        vertices[1] = new Vector3(mousePosition.x, mousePosition.y);
-        vertices[2] = new Vector3(mousePosition.x, mousePosition.y);
-        vertices[3] = new Vector3(mousePosition.x, mousePosition.y);
+        vertices[0] = new Vector3(point.x, point.y);
+        vertices[1] = new Vector3(point.x, point.y);
+        vertices[2] = new Vector3(point.x, point.y);
+        vertices[3] = new Vector3(point.x, point.y);
 
         triangles[0] = 0;
         triangles[1] = 1;
@@ -49,40 +100,36 @@ public class RaceDrawing : MonoBehaviour
         triangles[4] = 2;
         triangles[5] = 3;
 
-        _mesh = new Mesh();
-        _mesh.MarkDynamic();
+        lineMesh = new Mesh();
+        lineMesh.MarkDynamic();
 
-        _mesh.vertices = vertices;
-        _mesh.uv = uvs;
-        _mesh.triangles = triangles;
-        _mesh.MarkDynamic();
+        lineMesh.vertices = vertices;
+        lineMesh.uv = uvs;
+        lineMesh.triangles = triangles;
+        lineMesh.MarkDynamic();
 
-        _renderer.SetMesh(_mesh);
-        _renderer.SetMaterial(_lineMaterial, null);
+        renderer.SetMesh(lineMesh);
+        renderer.SetMaterial(material, null);
+
+        return lineMesh;
     }
 
-    private void ContinueLine()
+    private void ContinueMesh(Vector2 point, Mesh lineMesh, CanvasRenderer renderer, Vector2 lastPoint)
     {
-        if (!_leftMouse.action.IsPressed()) return;
+        Vector3[] vertices = new Vector3[lineMesh.vertices.Length + 2];
+        Vector2[] uvs = new Vector2[lineMesh.uv.Length + 2];
+        int[] triangles = new int[lineMesh.triangles.Length + 6];
 
-        Vector2 mousePosition = _mousePosition.action.ReadValue<Vector2>();
-        float distanceFromLastPoint = Vector2.Distance(mousePosition, _lastMousePosition);
-        if (distanceFromLastPoint < LineVertexFrequency) return;
-
-        Vector3[] vertices = new Vector3[_mesh.vertices.Length + 2];
-        Vector2[] uvs = new Vector2[_mesh.uv.Length + 2];
-        int[] triangles = new int[_mesh.triangles.Length + 6];
-
-        _mesh.vertices.CopyTo(vertices, 0);
-        _mesh.uv.CopyTo(uvs, 0);
-        _mesh.triangles.CopyTo(triangles, 0);
+        lineMesh.vertices.CopyTo(vertices, 0);
+        lineMesh.uv.CopyTo(uvs, 0);
+        lineMesh.triangles.CopyTo(triangles, 0);
 
         int vIndex = vertices.Length - 4;
-        
-        Vector2 mouseForward = (mousePosition - _lastMousePosition).normalized;
+
+        Vector2 mouseForward = (point - lastPoint).normalized;
         Vector2 offsetVector = Rotate(mouseForward, 90f);
-        Vector2 upVertex = mousePosition + (offsetVector * LineThickness);
-        Vector2 downVertex = mousePosition - (offsetVector * LineThickness);
+        Vector2 upVertex = point + (offsetVector * LineThickness);
+        Vector2 downVertex = point - (offsetVector * LineThickness);
 
         vertices[vIndex + 2] = upVertex;
         vertices[vIndex + 3] = downVertex;
@@ -99,24 +146,24 @@ public class RaceDrawing : MonoBehaviour
         triangles[tIndex + 4] = vIndex + 2;
         triangles[tIndex + 5] = vIndex + 3;
 
-        _mesh.vertices = vertices;
-        _mesh.uv = uvs;
-        _mesh.triangles = triangles;
-        _renderer.SetMesh(_mesh);
-
-        Debug.Log(triangles.Length);
-
-        _lastMousePosition = mousePosition;
+        lineMesh.vertices = vertices;
+        lineMesh.uv = uvs;
+        lineMesh.triangles = triangles;
+        renderer.SetMesh(lineMesh);
     }
 
     private Vector2 Rotate(Vector2 vector, float angleDegrees)
     {
-        // Create a Quaternion representing the rotation around the Z-axis.
-        // In 2D, rotations are around the Z-axis (Vector3.forward).
         Quaternion rotation = Quaternion.AngleAxis(angleDegrees, Vector3.forward);
-
-        // Multiply the Quaternion by the Vector2. 
-        // Unity automatically handles the conversion and rotation.
         return rotation * vector;
+    }
+
+    private Vector2 GetMousePosition()
+    {
+        Vector2 mousePosition = _mousePosition.action.ReadValue<Vector2>();
+        mousePosition.x = (mousePosition.x / Screen.width) * 1920f;
+        mousePosition.y = (mousePosition.y / Screen.width) * 1920f;
+        
+        return mousePosition;
     }
 }
