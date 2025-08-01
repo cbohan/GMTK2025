@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class RaceCat : MonoBehaviour
 {
-    private const float ANIMATION_SPEED = 2f;
-
     public Vector3 Position
     { 
         get {  return transform.position; }
@@ -19,6 +17,10 @@ public class RaceCat : MonoBehaviour
     public float SlowdownRate = .1f;
     public float Acceleration =  2f;
 
+    [Header("AI")]
+    public Vector2 BoostFrequency = new Vector2(2f, 5f);
+    public Vector2 BoostQuality = new Vector2(0f, 4f);
+
     [Header("References")]
     public Transform VisualsParentTransform;
     public Transform VisualsTransform;
@@ -28,15 +30,49 @@ public class RaceCat : MonoBehaviour
     [HideInInspector] public float CurrentSpeed = 0f;
     [HideInInspector] public RacePoint LastPoint;
     [HideInInspector] public RacePoint NextPoint;
+    [HideInInspector] public bool FinishedRace;
 
+    private float _aiBoostTimer;
     private float _rotation;
-    private bool _finishedRace;
 
     private void Update()
     {
         CalculateSpeed();
         UpdateVisuals();
         UpdateUI();
+        AI();
+    }
+
+    public void Init()
+    {
+        CurrentSpeed = MaxSpeed * .75f;
+        _aiBoostTimer = Random.Range(BoostFrequency.x, BoostFrequency.y);
+    }
+
+    private void AI()
+    {
+        if (IsPlayerControlled) return;
+
+        _aiBoostTimer -= Time.deltaTime;
+
+        if (_aiBoostTimer <= 0)
+        {
+            _aiBoostTimer = Random.Range(BoostFrequency.x, BoostFrequency.y);
+            float boostAmount = Random.Range(BoostQuality.x, BoostQuality.y);
+
+            if (boostAmount > 3f)
+            {
+                SpeedUp(1f);
+            }
+            else if (boostAmount > 2.5f)
+            {
+                SpeedUp(.75f);
+            }
+            else if (boostAmount > 1.5f)
+            {
+                SpeedUp(.5f);
+            }
+        }
     }
 
     public void SpeedUp(float amount)
@@ -46,14 +82,14 @@ public class RaceCat : MonoBehaviour
 
     public void AfterFinishMoveForward()
     {
-        _finishedRace = true;
+        FinishedRace = true;
 
         VisualsParentTransform.transform.position += VisualsParentTransform.forward * CurrentSpeed * Time.deltaTime; 
     }
 
     private void CalculateSpeed()
     {
-        if (_finishedRace) return;
+        if (FinishedRace) return;
 
         if (CurrentSpeed > MaxSpeed * TrotSpeedMult)
         { 
@@ -89,7 +125,7 @@ public class RaceCat : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (!IsPlayerControlled || _finishedRace) return;
+        if (!IsPlayerControlled || FinishedRace) return;
 
         UIHUD.Instance.SetSpeed(CurrentSpeed);
     }

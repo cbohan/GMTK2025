@@ -1,16 +1,25 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class RaceManager : MonoBehaviour
 {
     public static RaceManager Instance { get; private set; }
 
+    [HideInInspector] public bool IsRaceFinished;
+
     public RacePoint[] Points;
     public RaceCat PlayerCat;
     public RaceCat[] AICats;
 
+    [SerializeField] private CanvasGroup _placeTextCanvasGroup;
+    [SerializeField] private TMP_Text _placeText;
+
     private List<RaceCat> _raceCats = new List<RaceCat>();
+    private int _aiCatsThatHaveFinishedTheRace = 0;
+    private int _playerFinishPosition = 0;
 
     private void Awake()
     {
@@ -54,7 +63,7 @@ public class RaceManager : MonoBehaviour
     {
         foreach (RaceCat raceCat in _raceCats)
         {
-            raceCat.CurrentSpeed = raceCat.MaxSpeed * .75f;
+            raceCat.Init();
         }
     }
 
@@ -73,7 +82,28 @@ public class RaceManager : MonoBehaviour
         {
             if (cat.NextPoint == Points.Last())
             {
+                if (!cat.FinishedRace && cat.IsPlayerControlled)
+                {
+                    _playerFinishPosition = _aiCatsThatHaveFinishedTheRace;
+                }
+                else if (!cat.FinishedRace && !cat.IsPlayerControlled)
+                {
+                    _aiCatsThatHaveFinishedTheRace++;
+                }
+
                 cat.AfterFinishMoveForward();
+
+                bool allCatsHaveFinished = true;
+                foreach (RaceCat checkCat in _raceCats)
+                {
+                    allCatsHaveFinished &= checkCat.FinishedRace;
+                }
+
+                if (allCatsHaveFinished && !IsRaceFinished)
+                {
+                    IsRaceFinished = true;
+                    StartCoroutine(ShowPlaceText());
+                }
             }
             else
             {
@@ -86,6 +116,19 @@ public class RaceManager : MonoBehaviour
                 cat.Position,
                 cat.NextPoint.GetPosition(cat.Index),
                 distance);
+    }
+
+    private IEnumerator ShowPlaceText()
+    {
+        _placeText.text = GetPlacementText();
+        _placeText.gameObject.SetActive(true);
+        float alpha = 0f;
+        while (alpha < 1f)
+        {
+            alpha += Time.deltaTime * 3f;
+            _placeTextCanvasGroup.alpha = alpha;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private RacePoint GetNextRacePoint(RacePoint point)
@@ -113,5 +156,20 @@ public class RaceManager : MonoBehaviour
         }
 
         return myDistance - baseDistance;
+    }
+
+    private string GetPlacementText()
+    {
+        switch (_playerFinishPosition)
+        {
+            case 0:
+                return "1st Place!";
+            case 1:
+                return "2nd Place";
+            case 2:
+                return "3rd Place";
+            default:
+                return "Better Luck Next Time :(";
+        }
     }
 }
