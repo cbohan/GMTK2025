@@ -8,6 +8,7 @@ public class RaceManager : MonoBehaviour
 
     public RacePoint[] Points;
     public RaceCat PlayerCat;
+    public RaceCat[] AICats;
 
     private List<RaceCat> _raceCats = new List<RaceCat>();
 
@@ -18,15 +19,32 @@ public class RaceManager : MonoBehaviour
 
     private void Start()
     {
+        // Add cats to single list
         _raceCats.Clear();
         _raceCats.Add(PlayerCat);
-        // TODO: Add other cats to list of race cats
+        foreach (RaceCat aiCat in AICats)
+        {
+            _raceCats.Add(aiCat);
+        }
 
+        // Assign race numbers
+        for (int i = 0; i < _raceCats.Count; i++)
+        {
+            _raceCats[i].Index = i;
+        }
+
+        // Set at start line
         foreach (RaceCat raceCat in _raceCats)
         {
             raceCat.LastPoint = Points[0];
             raceCat.NextPoint = Points[1];
-            raceCat.transform.position = raceCat.LastPoint.Position;
+            raceCat.transform.position = raceCat.LastPoint.GetPosition(raceCat.Index);
+        }
+
+        // Move cats further outside forward
+        for (int i = 0; i < _raceCats.Count; i++)
+        {
+            MoveForward(CalcuateDistancePenalty(i), _raceCats[i]);
         }
 
         StartRace();
@@ -45,17 +63,29 @@ public class RaceManager : MonoBehaviour
         foreach (RaceCat raceCat in _raceCats)
         {
             float distanceMovedThisFrame = raceCat.CurrentSpeed * Time.deltaTime;
-            if (distanceMovedThisFrame > Vector3.Distance(raceCat.Position, raceCat.NextPoint.Position))
-            {
-                raceCat.LastPoint = raceCat.NextPoint;
-                raceCat.NextPoint = GetNextRacePoint(raceCat.LastPoint);
-            }
-
-            raceCat.Position = Vector3.MoveTowards(
-                    raceCat.Position,
-                    raceCat.NextPoint.Position,
-                    distanceMovedThisFrame);
+            MoveForward(distanceMovedThisFrame, raceCat);
         }
+    }
+
+    private void MoveForward(float distance, RaceCat cat)
+    {
+        if (distance > Vector3.Distance(cat.Position, cat.NextPoint.GetPosition(cat.Index)))
+        {
+            if (cat.NextPoint == Points.Last())
+            {
+                cat.AfterFinishMoveForward();
+            }
+            else
+            {
+                cat.LastPoint = cat.NextPoint;
+                cat.NextPoint = GetNextRacePoint(cat.LastPoint);
+            }
+        }
+
+        cat.Position = Vector3.MoveTowards(
+                cat.Position,
+                cat.NextPoint.GetPosition(cat.Index),
+                distance);
     }
 
     private RacePoint GetNextRacePoint(RacePoint point)
@@ -69,5 +99,19 @@ public class RaceManager : MonoBehaviour
         }
 
         return Points.Last();
+    }
+
+    private float CalcuateDistancePenalty(int index)
+    {
+        float baseDistance = 0;
+        float myDistance = 0;
+
+        for (int i = 0; i < Points.Length - 1; i++)
+        { 
+            baseDistance += Vector3.Distance(Points[i].GetPosition(0), Points[i + 1].GetPosition(0));
+            myDistance += Vector3.Distance(Points[i].GetPosition(index), Points[i + 1].GetPosition(index));
+        }
+
+        return myDistance - baseDistance;
     }
 }

@@ -12,6 +12,7 @@ public class RaceCamera : MonoBehaviour
             0f,
             0f);
         position = Vector3.MoveTowards(position, moveTowards, 5f);
+        position.y += 1.5f;
 
         transform.position = position + Vector3.up;
         transform.LookAt(RaceManager.Instance.PlayerCat.Position);

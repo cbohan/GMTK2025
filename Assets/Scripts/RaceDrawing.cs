@@ -44,12 +44,14 @@ public class RaceDrawing : MonoBehaviour
             Random.Range(borderSize, 1080 - borderSize));
 
         float currentAngle = Random.Range(0f, 360f);
-        float rotationAmount = Random.Range(3f, 7f);
-        float stepSize = Random.Range(10f, 20f);
+        float rotationAmount = Random.Range(3f, 6f);
+        float stepSize = Random.Range(10f, 14f);
 
-        Vector2 drift = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
+        Vector2 drift = new Vector2(Random.Range(0, 2.5f), Random.Range(0f, 2.5f));
+        drift.x *= point.x > (1920f / 2f) ? -1f : 1f;
+        drift.y *= point.y > (1080f / 2f) ? -1f : 1f;
 
-        int numSteps = Random.Range(70, 150);
+        int numSteps = Random.Range(70, 130);
 
         _targetMesh = StartMesh(point, _targetMesh, _targetMaterial, _targetRenderer);
         _targetPoints.Clear();
@@ -182,8 +184,6 @@ public class RaceDrawing : MonoBehaviour
         int increment = goForward ? 1 : -1;
         float cumulativeDistance = 0f;
         float graceDistance = 10f;
-
-        Debug.Log(goForward);
 
         foreach (Vector2 point in _targetPoints)
         {

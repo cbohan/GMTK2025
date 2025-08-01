@@ -24,11 +24,13 @@ public class RaceCat : MonoBehaviour
     public Transform VisualsTransform;
     public MeshRenderer SideRenderer;
 
+    [HideInInspector] public int Index;
     [HideInInspector] public float CurrentSpeed = 0f;
     [HideInInspector] public RacePoint LastPoint;
     [HideInInspector] public RacePoint NextPoint;
 
-    private float rotation;
+    private float _rotation;
+    private bool _finishedRace;
 
     private void Update()
     {
@@ -42,8 +44,17 @@ public class RaceCat : MonoBehaviour
         CurrentSpeed += Acceleration * amount;
     }
 
+    public void AfterFinishMoveForward()
+    {
+        _finishedRace = true;
+
+        VisualsParentTransform.transform.position += VisualsParentTransform.forward * CurrentSpeed * Time.deltaTime; 
+    }
+
     private void CalculateSpeed()
     {
+        if (_finishedRace) return;
+
         if (CurrentSpeed > MaxSpeed * TrotSpeedMult)
         { 
             CurrentSpeed -= SlowdownRate * Time.deltaTime;
@@ -52,7 +63,6 @@ public class RaceCat : MonoBehaviour
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0f, MaxSpeed);
     }
 
-
     private void UpdateVisuals()
     {
         Vector3 cameraPosition = new Vector3(
@@ -60,22 +70,26 @@ public class RaceCat : MonoBehaviour
             transform.position.y,
             Camera.main.transform.position.z);
 
-        Vector3 forward = NextPoint.Position - LastPoint.Position;
+        Vector3 forward = NextPoint.GetPosition(Index) - LastPoint.GetPosition(Index);
         if (forward.magnitude > 0f)
         {
-            VisualsParentTransform.forward = forward;
+            VisualsParentTransform.forward = Vector3.Lerp(
+                VisualsParentTransform.forward, 
+                forward, 
+                Time.deltaTime);
         }
 
-        rotation += 360f / (2 * Mathf.PI) * CurrentSpeed * Time.deltaTime;
-        VisualsTransform.rotation = Quaternion.Euler(
-            VisualsTransform.eulerAngles.x, 
-            VisualsTransform.eulerAngles.y, 
-            rotation);
+        _rotation += 360f / (2 * Mathf.PI) * CurrentSpeed * Time.deltaTime;
+        VisualsTransform.rotation =  Quaternion.Euler(
+            VisualsTransform.eulerAngles.x,
+            VisualsTransform.eulerAngles.y,
+            _rotation);
+
     }
 
     private void UpdateUI()
     {
-        if (!IsPlayerControlled) return;
+        if (!IsPlayerControlled || _finishedRace) return;
 
         UIHUD.Instance.SetSpeed(CurrentSpeed);
     }
