@@ -25,6 +25,7 @@ public class RaceCat : MonoBehaviour
     public Transform VisualsParentTransform;
     public Transform VisualsTransform;
     public MeshRenderer SideRenderer;
+    public ImageLookup ImageLookup;
 
     [HideInInspector] public int Index;
     [HideInInspector] public float CurrentSpeed = 0f;
@@ -41,6 +42,16 @@ public class RaceCat : MonoBehaviour
         UpdateVisuals();
         UpdateUI();
         AI();
+    }
+
+    public void SetData(CatData data)
+    { 
+        TrotSpeedMult = data.TrotSpeedMult;
+        MaxSpeed = data.MaxSpeed;
+        SlowdownRate = data.SlowdownRate;
+        Acceleration = data.Acceleration;
+
+        SideRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTexture(data.Image));
     }
 
     public void Init()

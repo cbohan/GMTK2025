@@ -496,6 +496,7 @@ MonoBehaviour:
   VisualsParentTransform: {fileID: 595918894}
   VisualsTransform: {fileID: 1994689332}
   SideRenderer: {fileID: 1994689333}
+  ImageLookup: {fileID: 11400000, guid: 8cf040635174504409bf4b1c55bc4e32, type: 2}
   Index: 0
   CurrentSpeed: 0
   LastPoint: {fileID: 0}
@@ -1848,6 +1849,7 @@ MonoBehaviour:
   VisualsParentTransform: {fileID: 128436309}
   VisualsTransform: {fileID: 13625578}
   SideRenderer: {fileID: 13625576}
+  ImageLookup: {fileID: 11400000, guid: 8cf040635174504409bf4b1c55bc4e32, type: 2}
   Index: 0
   CurrentSpeed: 0
   LastPoint: {fileID: 0}
@@ -2162,6 +2164,7 @@ MonoBehaviour:
   VisualsParentTransform: {fileID: 1661674454}
   VisualsTransform: {fileID: 609515384}
   SideRenderer: {fileID: 609515382}
+  ImageLookup: {fileID: 11400000, guid: 8cf040635174504409bf4b1c55bc4e32, type: 2}
   Index: 0
   CurrentSpeed: 0
   LastPoint: {fileID: 0}
@@ -2284,6 +2287,7 @@ MonoBehaviour:
   VisualsParentTransform: {fileID: 1186733000}
   VisualsTransform: {fileID: 969626828}
   SideRenderer: {fileID: 969626826}
+  ImageLookup: {fileID: 11400000, guid: 8cf040635174504409bf4b1c55bc4e32, type: 2}
   Index: 0
   CurrentSpeed: 0
   LastPoint: {fileID: 0}

@@ -19,7 +19,6 @@ public class RaceManager : MonoBehaviour
 
     private List<RaceCat> _raceCats = new List<RaceCat>();
     private int _aiCatsThatHaveFinishedTheRace = 0;
-    private int _playerFinishPosition = 0;
 
     private void Awake()
     {
@@ -31,9 +30,13 @@ public class RaceManager : MonoBehaviour
         // Add cats to single list
         _raceCats.Clear();
         _raceCats.Add(PlayerCat);
-        foreach (RaceCat aiCat in AICats)
+        PlayerCat.SetData(InterSceneData.PlayerCat);
+
+
+        for (int i = 0; i < 3; i++)
         {
-            _raceCats.Add(aiCat);
+            AICats[i].SetData(InterSceneData.AiCats[i]);
+            _raceCats.Add(AICats[i]);
         }
 
         // Assign race numbers
@@ -84,7 +87,7 @@ public class RaceManager : MonoBehaviour
             {
                 if (!cat.FinishedRace && cat.IsPlayerControlled)
                 {
-                    _playerFinishPosition = _aiCatsThatHaveFinishedTheRace;
+                    InterSceneData.PlayerRacePlacement = _aiCatsThatHaveFinishedTheRace;
                 }
                 else if (!cat.FinishedRace && !cat.IsPlayerControlled)
                 {
@@ -129,6 +132,10 @@ public class RaceManager : MonoBehaviour
             _placeTextCanvasGroup.alpha = alpha;
             yield return new WaitForEndOfFrame();
         }
+
+        yield return new WaitForSeconds(1.5f);
+
+
     }
 
     private RacePoint GetNextRacePoint(RacePoint point)
@@ -160,7 +167,7 @@ public class RaceManager : MonoBehaviour
 
     private string GetPlacementText()
     {
-        switch (_playerFinishPosition)
+        switch (InterSceneData.PlayerRacePlacement)
         {
             case 0:
                 return "1st Place!";

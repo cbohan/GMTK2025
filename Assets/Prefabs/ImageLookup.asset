@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b98b10064adef4a826e0567bb10b74, type: 3}
+  m_Name: ImageLookup
+  m_EditorClassIdentifier: 
+  HoneyLoopsRace: {fileID: 2800000, guid: a7d5843bce75bb34782319b894af106e, type: 3}
+  TEMP_ChonkerBoiRace: {fileID: 2800000, guid: a4e8e7f683abdca4d93d5ed0fb80ae9d, type: 3}
+  TEMP_DefinitelyACatRace: {fileID: 2800000, guid: ec545c89995efd94c866e6f9377fadb6, type: 3}
+  TEMP_GreenFrootLoopRace: {fileID: 2800000, guid: c8b092a9490bbd04a94ab8d8fb012456, type: 3}
