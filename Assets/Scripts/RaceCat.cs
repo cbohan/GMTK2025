@@ -77,6 +77,6 @@ public class RaceCat : MonoBehaviour
     {
         if (!IsPlayerControlled) return;
 
-        UIHUD.Instance.SpeedSlider.value = CurrentSpeed / MaxSpeed;
+        UIHUD.Instance.SetSpeed(CurrentSpeed);
     }
 }
