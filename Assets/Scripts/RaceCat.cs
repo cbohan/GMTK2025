@@ -19,10 +19,8 @@ public class RaceCat : MonoBehaviour
     public float SlowdownRate = .1f;
     public float Acceleration =  2f;
 
-    [Header("Animations")]
-    public Texture[] SideViewRunFrames;
-
     [Header("References")]
+    public Transform VisualsParentTransform;
     public Transform VisualsTransform;
     public MeshRenderer SideRenderer;
 
@@ -30,7 +28,7 @@ public class RaceCat : MonoBehaviour
     [HideInInspector] public RacePoint LastPoint;
     [HideInInspector] public RacePoint NextPoint;
 
-    private float _animationTime;
+    private float rotation;
 
     private void Update()
     {
@@ -65,12 +63,14 @@ public class RaceCat : MonoBehaviour
         Vector3 forward = NextPoint.Position - LastPoint.Position;
         if (forward.magnitude > 0f)
         {
-            VisualsTransform.forward = forward;
+            VisualsParentTransform.forward = forward;
         }
 
-        _animationTime += Time.deltaTime * CurrentSpeed * ANIMATION_SPEED;
-        int frame = Mathf.FloorToInt(_animationTime) % SideViewRunFrames.Length;
-        SideRenderer.material.SetTexture("_BaseMap", SideViewRunFrames[frame]);
+        rotation += 360f / (2 * Mathf.PI) * CurrentSpeed * Time.deltaTime;
+        VisualsTransform.rotation = Quaternion.Euler(
+            VisualsTransform.eulerAngles.x, 
+            VisualsTransform.eulerAngles.y, 
+            rotation);
     }
 
     private void UpdateUI()
