@@ -1,47 +1,43 @@
 public static class InterSceneData
 {
-    private static CatData HoneyLoops = new CatData()
+    public static CatData HoneyLoops = new CatData()
     {
         Name = "Honey Loops",
         Image = CatImage.HoneyLoops,
 
-        TrotSpeedMult = .5f,
-        MaxSpeed = 5f,
-        SlowdownRate = .1f,
-        Acceleration = 2f,
+        Speed = StatValue.Medium,
+        Stamina = StatValue.Medium,
+        Acceleration = StatValue.Medium,
     };
 
-    private static CatData ChonkerBoi = new CatData()
+    public static CatData ChonkerBoi = new CatData()
     {
         Name = "Chonker Boi",
         Image = CatImage.TEMP_ChonkerBoi,
 
-        TrotSpeedMult = .5f,
-        MaxSpeed = 5f,
-        SlowdownRate = .1f,
-        Acceleration = 2f,
+        Speed = StatValue.Medium,
+        Stamina = StatValue.High,
+        Acceleration = StatValue.Low,
     };
 
-    private static CatData DefinitelyACat = new CatData()
+    public static CatData DefinitelyACat = new CatData()
     {
         Name = "Definitely A Cat",
         Image = CatImage.TEMP_DefinitelyACat,
 
-        TrotSpeedMult = .5f,
-        MaxSpeed = 5f,
-        SlowdownRate = .1f,
-        Acceleration = 2f,
+        Speed = StatValue.High,
+        Stamina = StatValue.Medium,
+        Acceleration = StatValue.Low,
     };
 
-    private static CatData GreenFrootLoop = new CatData()
+    public static CatData GreenFrootLoop = new CatData()
     {
         Name = "Green Froot Loop",
         Image = CatImage.TEMP_GreenFrootLoop,
 
-        TrotSpeedMult = .5f,
-        MaxSpeed = 5f,
-        SlowdownRate = .1f,
-        Acceleration = 2f,
+        Speed = StatValue.Medium,
+        Stamina = StatValue.Low,
+        Acceleration = StatValue.High,
     };
 
     public static int PlayerRacePlacement;

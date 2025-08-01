@@ -6,13 +6,19 @@ public enum CatImage
     TEMP_GreenFrootLoop,
 }
 
+public enum StatValue
+{ 
+    Low,
+    Medium,
+    High
+}
+
 public struct CatData
 {
     public string Name;
     public CatImage Image;
 
-    public float TrotSpeedMult;
-    public float MaxSpeed;
-    public float SlowdownRate;
-    public float Acceleration;
+    public StatValue Speed;
+    public StatValue Acceleration;
+    public StatValue Stamina;
 }

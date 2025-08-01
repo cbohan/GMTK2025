@@ -46,10 +46,19 @@ public class RaceCat : MonoBehaviour
 
     public void SetData(CatData data)
     { 
-        TrotSpeedMult = data.TrotSpeedMult;
-        MaxSpeed = data.MaxSpeed;
-        SlowdownRate = data.SlowdownRate;
-        Acceleration = data.Acceleration;
+        TrotSpeedMult = .5f;
+
+        MaxSpeed = 5f;
+        if (data.Speed == StatValue.Low) MaxSpeed = 4;
+        if (data.Speed == StatValue.High) MaxSpeed = 6;
+
+        SlowdownRate = .1f;
+        if (data.Stamina == StatValue.Low) SlowdownRate = .15f;
+        if (data.Stamina == StatValue.Low) SlowdownRate = .05f;
+
+        Acceleration = 2f;
+        if (data.Acceleration == StatValue.Low) Acceleration = 1.5f;
+        if (data.Acceleration == StatValue.High) Acceleration = 2.5f;
 
         SideRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTexture(data.Image));
     }

@@ -16,3 +16,7 @@ MonoBehaviour:
   TEMP_ChonkerBoiRace: {fileID: 2800000, guid: a4e8e7f683abdca4d93d5ed0fb80ae9d, type: 3}
   TEMP_DefinitelyACatRace: {fileID: 2800000, guid: ec545c89995efd94c866e6f9377fadb6, type: 3}
   TEMP_GreenFrootLoopRace: {fileID: 2800000, guid: c8b092a9490bbd04a94ab8d8fb012456, type: 3}
+  HoneyLoops: {fileID: 2800000, guid: 15f4cf37dab6c604fa6a00aec6abc38a, type: 3}
+  TEMP_ChonkerBoi: {fileID: 2800000, guid: a4e8e7f683abdca4d93d5ed0fb80ae9d, type: 3}
+  TEMP_DefinitelyACat: {fileID: 2800000, guid: ec545c89995efd94c866e6f9377fadb6, type: 3}
+  TEMP_GreenFrootLoop: {fileID: 2800000, guid: c8b092a9490bbd04a94ab8d8fb012456, type: 3}
