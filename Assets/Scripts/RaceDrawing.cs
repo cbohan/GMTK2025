@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +15,9 @@ public class RaceDrawing : MonoBehaviour
     [SerializeField] private CanvasRenderer _drawRenderer;
     [SerializeField] private CanvasRenderer _targetRenderer;
 
+    private List<Vector2> _drawnPoints = new List<Vector2>(2048);
+    private List<Vector2> _targetPoints = new List<Vector2>(2048);
+
     private Mesh _drawMesh;
     private Mesh _targetMesh;
     private Vector2 _lastMousePosition;
@@ -26,6 +31,7 @@ public class RaceDrawing : MonoBehaviour
     {
         StartNewLine();
         ContinueLine();
+        EvaluateLine();
     }
 
 
@@ -46,13 +52,14 @@ public class RaceDrawing : MonoBehaviour
         int numSteps = Random.Range(70, 150);
 
         _targetMesh = StartMesh(point, _targetMesh, _targetMaterial, _targetRenderer);
+        _targetPoints.Clear();
+        _targetPoints.Add(point);
         for (int i = 0; i < numSteps; i++)
         {
             Vector2 previousPoint = point;
             point += Rotate(new Vector2(0f, stepSize), currentAngle) + drift;
             ContinueMesh(point, _targetMesh, _targetRenderer, previousPoint);
-
-            Debug.Log(point);
+            _targetPoints.Add(point);
 
             currentAngle += rotationAmount;
         }
@@ -66,6 +73,8 @@ public class RaceDrawing : MonoBehaviour
         _lastMousePosition = mousePosition;
 
         _drawMesh = StartMesh(mousePosition, _drawMesh, _drawMaterial, _drawRenderer);
+        _drawnPoints.Clear();
+        _drawnPoints.Add(mousePosition);
     }
 
     private void ContinueLine()
@@ -77,11 +86,16 @@ public class RaceDrawing : MonoBehaviour
         if (distanceFromLastPoint < LineVertexFrequency) return;
 
         ContinueMesh(mousePosition, _drawMesh, _drawRenderer, _lastMousePosition);
+        _drawnPoints.Add(mousePosition);
 
         _lastMousePosition = mousePosition;
     }
 
-    private Mesh StartMesh(Vector2 point, Mesh lineMesh, Material material, CanvasRenderer renderer)
+    private Mesh StartMesh(
+        Vector2 point, 
+        Mesh lineMesh, 
+        Material material, 
+        CanvasRenderer renderer)
     {
         Vector3[] vertices = new Vector3[4];
         Vector2[] uvs = new Vector2[4];
@@ -114,7 +128,11 @@ public class RaceDrawing : MonoBehaviour
         return lineMesh;
     }
 
-    private void ContinueMesh(Vector2 point, Mesh lineMesh, CanvasRenderer renderer, Vector2 lastPoint)
+    private void ContinueMesh(
+        Vector2 point, 
+        Mesh lineMesh, 
+        CanvasRenderer renderer, 
+        Vector2 lastPoint)
     {
         Vector3[] vertices = new Vector3[lineMesh.vertices.Length + 2];
         Vector2[] uvs = new Vector2[lineMesh.uv.Length + 2];
@@ -150,6 +168,61 @@ public class RaceDrawing : MonoBehaviour
         lineMesh.uv = uvs;
         lineMesh.triangles = triangles;
         renderer.SetMesh(lineMesh);
+    }
+
+    private void EvaluateLine()
+    {
+        if (!_leftMouse.action.WasReleasedThisFrame()) return;
+
+        bool goForward = 
+            Vector2.Distance(_targetPoints[0], _drawnPoints[0]) < 
+            Vector2.Distance(_targetPoints[0], _drawnPoints[_drawnPoints.Count - 1]);
+
+        int drawIndex = goForward ? 0 : _drawnPoints.Count - 1;
+        int increment = goForward ? 1 : -1;
+        float cumulativeDistance = 0f;
+        float graceDistance = 10f;
+
+        Debug.Log(goForward);
+
+        foreach (Vector2 point in _targetPoints)
+        {
+            while (
+                ((goForward && drawIndex < _drawnPoints.Count - 1) || (!goForward && drawIndex > 0)) &&
+                Vector2.Distance(point, _drawnPoints[drawIndex + increment]) < Vector2.Distance(point, _drawnPoints[drawIndex]))
+            { 
+                drawIndex += increment;
+            }
+
+            float distance = Mathf.Max(0, Vector2.Distance(point, _drawnPoints[drawIndex]) - graceDistance);
+            cumulativeDistance += distance;
+        }
+
+        float score = cumulativeDistance / _targetPoints.Count;
+
+        if (score < 5)
+        {
+            Debug.Log("Excellent");
+            RaceManager.Instance.PlayerCat.SpeedUp(1f);
+        }
+        else if (score < 10)
+        {
+            Debug.Log("Good");
+            RaceManager.Instance.PlayerCat.SpeedUp(.75f);
+        }
+        else if (score < 20)
+        {
+            Debug.Log("Meh");
+            RaceManager.Instance.PlayerCat.SpeedUp(.5f);
+        }
+        else
+        {
+            Debug.Log("Bad");
+        }
+
+        Debug.Log(score);
+        CreateTargetLine();
+        _drawRenderer.SetMesh(null);
     }
 
     private Vector2 Rotate(Vector2 vector, float angleDegrees)

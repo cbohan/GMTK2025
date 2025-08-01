@@ -28,6 +28,16 @@ public class RaceManager : MonoBehaviour
             raceCat.NextPoint = Points[1];
             raceCat.transform.position = raceCat.LastPoint.Position;
         }
+
+        StartRace();
+    }
+
+    public void StartRace()
+    {
+        foreach (RaceCat raceCat in _raceCats)
+        {
+            raceCat.CurrentSpeed = raceCat.MaxSpeed * .75f;
+        }
     }
 
     private void Update()
