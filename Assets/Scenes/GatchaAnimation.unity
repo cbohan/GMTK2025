@@ -1019,8 +1019,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b741f81f6b168946aaa75d26e02be53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _GatchaCat: {fileID: 0}
+  _GatchaCat: {fileID: 2100000, guid: 338cbb021935777409e03c745e6a362b, type: 2}
   _GatchaLight: {fileID: 628250045}
+  _imageLookup: {fileID: 11400000, guid: 8cf040635174504409bf4b1c55bc4e32, type: 2}
+  _Poop: {fileID: 2800000, guid: 37ce79fce2ada284d9657f77860a367b, type: 3}
 --- !u!1 &1312398244
 GameObject:
   m_ObjectHideFlags: 0
