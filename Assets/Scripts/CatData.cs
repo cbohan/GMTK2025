@@ -19,6 +19,7 @@ public struct CatData
     public CatImage Image;
 
     public int Level;
+    public bool IsUnlocked;
 
     public StatValue Speed;
     public StatValue Acceleration;

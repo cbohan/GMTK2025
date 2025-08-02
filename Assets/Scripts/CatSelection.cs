@@ -14,6 +14,7 @@ public class CatSelection : MonoBehaviour
     [SerializeField] private TMP_Text _speed;
     [SerializeField] private TMP_Text _acceleration;
     [SerializeField] private TMP_Text _stamina;
+    [SerializeField] private Button _selectButton;
 
     public void Init(CatData catData, CatData[] aiCats)
     {
@@ -25,6 +26,16 @@ public class CatSelection : MonoBehaviour
         _speed.text = $"Speed: {catData.Speed}";
         _acceleration.text = $"Acceleration: {catData.Acceleration}";
         _stamina.text = $"Stamina: {catData.Stamina}";
+
+        if (!catData.IsUnlocked)
+        {
+            _image.color = Color.black;
+            _name.text = "???????";
+            _speed.text = "Speed: ???";
+            _acceleration.text = "Acceleration: ???";
+            _stamina.text = "Stamina: ???";
+            _selectButton.interactable = false;
+        }
     }
 
     public void Click()
