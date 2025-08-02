@@ -29,6 +29,8 @@ public struct CatData
     public int Level;
     public bool IsUnlocked;
 
+    public string Description;
+
     public StatValue Speed;
     public StatValue Acceleration;
     public StatValue Stamina;

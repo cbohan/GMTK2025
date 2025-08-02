@@ -11,10 +11,9 @@ public class CatSelection : MonoBehaviour
     [SerializeField] private RawImage _image;
     [SerializeField] private ImageLookup _imageLookup;
     [SerializeField] private TMP_Text _name;
-    [SerializeField] private TMP_Text _speed;
-    [SerializeField] private TMP_Text _acceleration;
-    [SerializeField] private TMP_Text _stamina;
+    [SerializeField] private TMP_Text _description;
     [SerializeField] private Button _selectButton;
+    [SerializeField] private RawImage[] _levels = new RawImage[4];
 
     public void Init(CatData catData, CatData[] aiCats)
     {
@@ -22,18 +21,33 @@ public class CatSelection : MonoBehaviour
         AiDatas = aiCats;
 
         _image.texture = _imageLookup.GetNonRaceTexture(Data.Image);
+        _imageLookup.GetLevelTexture(Data.Image, _levels);
         _name.text = catData.Name;
-        _speed.text = $"Speed: {catData.Speed}";
-        _acceleration.text = $"Acceleration: {catData.Acceleration}";
-        _stamina.text = $"Stamina: {catData.Stamina}";
+        _description.text = catData.Description;
+
+        switch (catData.Level)
+        {
+            case 0:
+                _levels[0].color = Color.black;
+                goto case 1;
+            case 1:
+                _levels[1].color = Color.black;
+                goto case 2;
+            case 2:
+                _levels[2].color = Color.black;
+                goto case 3;
+            case 3:
+                _levels[3].color = Color.black;
+                goto default;
+            default:
+                break;                
+        }
 
         if (catData.Level == 0)
         {
             _image.color = Color.black;
             _name.text = "???????";
-            _speed.text = "Speed: ???";
-            _acceleration.text = "Acceleration: ???";
-            _stamina.text = "Stamina: ???";
+            _description.text = "???????";
             _selectButton.interactable = false;
         }
     }

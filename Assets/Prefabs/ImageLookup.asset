@@ -20,3 +20,19 @@ MonoBehaviour:
   Loop: {fileID: 2800000, guid: 075d78bd1b8737344a87da87e06ba55d, type: 3}
   Oreo: {fileID: 2800000, guid: 03539656bc21ce84787391afe6514a31, type: 3}
   Apple: {fileID: 2800000, guid: 014f79d6dbb63f444a71102a307c0872, type: 3}
+  Honey1: {fileID: 2800000, guid: c5e9ad80e77e1654eabeb21a4e35aa02, type: 3}
+  Honey2: {fileID: 2800000, guid: 332587dadcefe6847b6e956be84b542a, type: 3}
+  Honey3: {fileID: 2800000, guid: e3776476c1007f24ba25587d69a6ec29, type: 3}
+  Honey4: {fileID: 2800000, guid: a69d1146da1c00f4cb308053d190f106, type: 3}
+  Loop1: {fileID: 2800000, guid: 0db4ee6a4afee5845ae336a5c45a4372, type: 3}
+  Loop2: {fileID: 2800000, guid: 2ad8808570ecec3499b65afefb412914, type: 3}
+  Loop3: {fileID: 2800000, guid: 87c9b1d9c94b5b14eafa1d472fe79f58, type: 3}
+  Loop4: {fileID: 2800000, guid: b8fdd2f2f7e8f364e880f7411282c2f7, type: 3}
+  Oreo1: {fileID: 2800000, guid: 9e4b64c3b799ae94d81234ace144f6f5, type: 3}
+  Oreo2: {fileID: 2800000, guid: bafc17e091970be40b18831fb94e292e, type: 3}
+  Oreo3: {fileID: 2800000, guid: 9312bfc9c95000541b3569e4e9b0d71b, type: 3}
+  Oreo4: {fileID: 2800000, guid: 4fb718b31f17843409154c90a2c6f3cb, type: 3}
+  Apple1: {fileID: 2800000, guid: 534f7238e74c2124ba1a7180e0b9d53c, type: 3}
+  Apple2: {fileID: 2800000, guid: 7fd8e7799c22cda41aecaecee23caa4c, type: 3}
+  Apple3: {fileID: 2800000, guid: e932d0dec22dc7b44aa77ab10c92f53e, type: 3}
+  Apple4: {fileID: 2800000, guid: 889aa614e2e47834fa544603200f60fe, type: 3}
