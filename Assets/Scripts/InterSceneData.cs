@@ -13,9 +13,7 @@ public static class InterSceneData
 
         Ult = UltType.Sticky_Honey,
     };
-
-
-        Ult = UltType.Chungus_Mode,
+    
     public static CatData Oreo = new CatData()
     {
         Name = "Oreos?",
