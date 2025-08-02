@@ -9,6 +9,8 @@ public static class InterSceneData
         Speed = StatValue.Medium,
         Stamina = StatValue.Medium,
         Acceleration = StatValue.Medium,
+
+        Ult = UltType.Sticky_Honey,
     };
 
     public static CatData Loop = new CatData()
@@ -20,6 +22,8 @@ public static class InterSceneData
         Speed = StatValue.Medium,
         Stamina = StatValue.High,
         Acceleration = StatValue.Low,
+
+        Ult = UltType.Chungus_Mode,
     };
 
     public static CatData Oreo = new CatData()
@@ -31,6 +35,8 @@ public static class InterSceneData
         Speed = StatValue.High,
         Stamina = StatValue.Medium,
         Acceleration = StatValue.Low,
+
+        Ult = UltType.Sugar_Rush,
     };
 
     public static CatData Apple = new CatData()
@@ -42,17 +48,17 @@ public static class InterSceneData
         Speed = StatValue.Medium,
         Stamina = StatValue.Low,
         Acceleration = StatValue.High,
+
+        Ult = UltType.Apple_Jacked,
     };
 
     public static int PlayerRacePlacement;
 
-    public static bool GameStarted = false;
-
-    public static CatData PlayerCat = Honey;
+    public static CatData PlayerCat = Loop;
     public static CatData[] AiCats = new CatData[]
     {
         Loop,
-        Oreo,
+        Honey,
         Apple,
     };    
 }

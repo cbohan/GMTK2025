@@ -7,7 +7,7 @@ public class UIHUD : MonoBehaviour
 
     [SerializeField] private Transform _dialTransform;
     [SerializeField] private float[] _dialRotations;
-
+    [SerializeField] private UltMeter _ultSlider;
 
     private void Awake()
     {
@@ -25,5 +25,10 @@ public class UIHUD : MonoBehaviour
 
         float rotation = Mathf.Lerp(_dialRotations[lowerSpeed], _dialRotations[upperSpeed], remainder);
         _dialTransform.rotation = Quaternion.Euler(0f, 0f, rotation);
+    }
+
+    public void SetUlt(float amount)
+    { 
+        _ultSlider.SetUlt(amount);
     }
 }

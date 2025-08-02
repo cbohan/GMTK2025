@@ -1,7 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RaceCat : MonoBehaviour
 {
+    private const float SUGAR_RUSH_DURATION = 1f;
+
+    public float ChungusMultiplier { get; private set; } = 1f;
+
     public Vector3 Position
     { 
         get {  return transform.position; }
@@ -10,6 +15,7 @@ public class RaceCat : MonoBehaviour
 
     [Header("Input")]
     public bool IsPlayerControlled;
+    [SerializeField] private InputActionReference _ultInput;
 
     [Header("Stats")]
     public float TrotSpeedMult = .5f;
@@ -33,15 +39,49 @@ public class RaceCat : MonoBehaviour
     [HideInInspector] public RacePoint NextPoint;
     [HideInInspector] public bool FinishedRace;
 
+    private float _ultMeter;
     private float _aiBoostTimer;
     private float _rotation;
 
+    private float _surgeSpeedMult = 1f;
+    private float _sugarRushTimer = 0f;
+    private float _preSugarRushSpeed;
+
+    private UltType _ultType;
+
     private void Update()
     {
+        Ult();
         CalculateSpeed();
         UpdateVisuals();
         UpdateUI();
         AI();
+    }
+
+    private void Ult()
+    {
+        if (!IsPlayerControlled || !_ultInput.action.WasPressedThisFrame()) return;
+
+        if (_ultType == UltType.Sticky_Honey)
+        {
+            RaceManager.Instance.StickyHoney();
+        }
+        else if (_ultType == UltType.Sugar_Rush)
+        {
+            _preSugarRushSpeed = CurrentSpeed;
+            _sugarRushTimer = SUGAR_RUSH_DURATION;
+        }
+        else if (_ultType == UltType.Apple_Jacked)
+        {
+            _surgeSpeedMult = 2f;
+        }
+        else if (_ultType == UltType.Chungus_Mode)
+        {
+            ChungusMultiplier = 1.5f;
+        }
+
+        _ultMeter = 0;
+        UIHUD.Instance.SetUlt(_ultMeter);
     }
 
     public void SetData(CatData data)
@@ -61,12 +101,15 @@ public class RaceCat : MonoBehaviour
         if (data.Acceleration == StatValue.High) Acceleration = 2.5f;
 
         SideRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTexture(data.Image));
+
+        _ultType = data.Ult;
     }
 
     public void Init()
     {
         CurrentSpeed = MaxSpeed * .75f;
         _aiBoostTimer = Random.Range(BoostFrequency.x, BoostFrequency.y);
+        UIHUD.Instance.SetUlt(0f);
     }
 
     private void AI()
@@ -95,9 +138,15 @@ public class RaceCat : MonoBehaviour
         }
     }
 
-    public void SpeedUp(float amount)
+    public void SpeedUp(float amount, bool updatesUltMeter = true)
     {
         CurrentSpeed += Acceleration * amount;
+
+        if (IsPlayerControlled && updatesUltMeter)
+        {
+            _ultMeter += Mathf.Pow(amount, 1.5f) * .3f;
+            UIHUD.Instance.SetUlt(Mathf.Clamp01(_ultMeter));
+        }
     }
 
     public void AfterFinishMoveForward()
@@ -111,12 +160,35 @@ public class RaceCat : MonoBehaviour
     {
         if (FinishedRace) return;
 
-        if (CurrentSpeed > MaxSpeed * TrotSpeedMult)
-        { 
+        float trotSpeed = MaxSpeed * TrotSpeedMult;
+        if (CurrentSpeed > trotSpeed)
+        {
             CurrentSpeed -= SlowdownRate * Time.deltaTime;
+            if (CurrentSpeed < trotSpeed) CurrentSpeed = trotSpeed;
+        }
+        else
+        {
+            CurrentSpeed += SlowdownRate * 5f * Time.deltaTime;
+            if (CurrentSpeed > trotSpeed) CurrentSpeed = trotSpeed;
         }
 
         CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0f, MaxSpeed);
+        CurrentSpeed *= Mathf.Max(_surgeSpeedMult, 1f);
+        if (_sugarRushTimer > 0)
+        {
+            float sugarRushT = 1f;
+            if (_sugarRushTimer < .1f) sugarRushT = _sugarRushTimer * 10f;
+            if (_sugarRushTimer > SUGAR_RUSH_DURATION - .1f)
+            {
+                sugarRushT = (SUGAR_RUSH_DURATION - _sugarRushTimer) * 10f;
+            }
+            CurrentSpeed = Mathf.Lerp(_preSugarRushSpeed, 10f, sugarRushT);
+        }
+
+        _surgeSpeedMult -= Time.deltaTime / 2f;
+        _surgeSpeedMult = Mathf.Max(_surgeSpeedMult, 1f);
+
+        _sugarRushTimer -= Time.deltaTime;
     }
 
     private void UpdateVisuals()
@@ -141,12 +213,14 @@ public class RaceCat : MonoBehaviour
             VisualsTransform.eulerAngles.y,
             _rotation);
 
+        VisualsTransform.localScale = Vector3.one * ChungusMultiplier;
+        VisualsTransform.localPosition = Vector3.up * (ChungusMultiplier * .5f);
     }
 
     private void UpdateUI()
     {
         if (!IsPlayerControlled || FinishedRace) return;
 
-        UIHUD.Instance.SetSpeed(CurrentSpeed);
+        UIHUD.Instance.SetSpeed(CurrentSpeed * ChungusMultiplier);
     }
 }
