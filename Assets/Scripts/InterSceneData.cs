@@ -53,12 +53,13 @@ public static class InterSceneData
     };
 
     public static int PlayerRacePlacement;
+    public static bool GameStarted;
 
-    public static CatData PlayerCat = Loop;
+    public static CatData PlayerCat = Honey;
     public static CatData[] AiCats = new CatData[]
     {
         Loop,
-        Honey,
+        Oreo,
         Apple,
     };    
 }
