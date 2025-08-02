@@ -97,3 +97,9 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+/[Aa]ssets/AssetInventory
+/[Aa]ssets/AssetInventory.meta
+
+/[Aa]ssets/Epic Toon FX
+/[Aa]ssets/Epic Toon FX.meta
