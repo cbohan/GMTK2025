@@ -16,6 +16,7 @@ public class RaceManager : MonoBehaviour
 
     [SerializeField] private CanvasGroup _placeTextCanvasGroup;
     [SerializeField] private TMP_Text _placeText;
+    [SerializeField] private CanvasGroup _drawingCanvasGroup;
 
     private List<RaceCat> _raceCats = new List<RaceCat>();
     private int _aiCatsThatHaveFinishedTheRace = 0;
@@ -125,11 +126,17 @@ public class RaceManager : MonoBehaviour
     {
         _placeText.text = GetPlacementText();
         _placeText.gameObject.SetActive(true);
+
+        _drawingCanvasGroup.blocksRaycasts = false;
+        _drawingCanvasGroup.interactable = false;
+
         float alpha = 0f;
         while (alpha < 1f)
         {
             alpha += Time.deltaTime * 3f;
             _placeTextCanvasGroup.alpha = alpha;
+            _drawingCanvasGroup.alpha = 1 - alpha;
+
             yield return new WaitForEndOfFrame();
         }
 
