@@ -4,7 +4,7 @@ public static class InterSceneData
     {
         Name = "Honey Loops",
         Image = CatImage.Honey,
-        Level = 0,
+        Level = 1,
         IsUnlocked = true,
         
         Speed = StatValue.Medium,
