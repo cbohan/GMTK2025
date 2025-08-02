@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GatchaController : MonoBehaviour
@@ -13,6 +14,7 @@ public class GatchaController : MonoBehaviour
     [SerializeField] private Texture _Poop;
     [SerializeField] private TMP_Text _GatchaText;
     [SerializeField] private GameObject _GatchaTextEffect;
+    [SerializeField] private GameObject _NextButton;
 
     private string CatText;
 
@@ -20,6 +22,8 @@ public class GatchaController : MonoBehaviour
     void Start()
     {
         float gatchaRoll = Random.value;
+        
+        _NextButton.SetActive(false);
 
         if (gatchaRoll <= 0.35)
         {
@@ -81,6 +85,12 @@ public class GatchaController : MonoBehaviour
         _GatchaTextEffect.SetActive(false);
         _GatchaText.text = "You Got . . . " + CatText;
         _GatchaTextEffect.SetActive(true);
+        _NextButton.SetActive(true);
 
+    }
+
+    public void Click()
+    {
+        SceneManager.LoadScene("MainMenuScene");
     }
 }

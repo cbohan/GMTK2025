@@ -5,7 +5,6 @@ public static class InterSceneData
         Name = "Honey Loops",
         Image = CatImage.Honey,
         Level = 1,
-        IsUnlocked = true,
         
         Speed = StatValue.Medium,
         Stamina = StatValue.Medium,
@@ -17,7 +16,6 @@ public static class InterSceneData
         Name = "Brother Loops",
         Image = CatImage.Loop,
         Level = 0,
-        IsUnlocked = false,
 
         Speed = StatValue.Medium,
         Stamina = StatValue.High,
@@ -29,7 +27,6 @@ public static class InterSceneData
         Name = "Oreos?",
         Image = CatImage.Oreo,
         Level = 0,
-        IsUnlocked = false,
 
         Speed = StatValue.High,
         Stamina = StatValue.Medium,
@@ -41,7 +38,6 @@ public static class InterSceneData
         Name = "Jacked Cat",
         Image = CatImage.Apple,
         Level = 0,
-        IsUnlocked = false,
 
         Speed = StatValue.Medium,
         Stamina = StatValue.Low,
@@ -49,6 +45,8 @@ public static class InterSceneData
     };
 
     public static int PlayerRacePlacement;
+
+    public static bool GameStarted = false;
 
     public static CatData PlayerCat = Honey;
     public static CatData[] AiCats = new CatData[]

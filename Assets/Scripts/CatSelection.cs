@@ -27,7 +27,7 @@ public class CatSelection : MonoBehaviour
         _acceleration.text = $"Acceleration: {catData.Acceleration}";
         _stamina.text = $"Stamina: {catData.Stamina}";
 
-        if (!catData.IsUnlocked)
+        if (catData.Level == 0)
         {
             _image.color = Color.black;
             _name.text = "???????";

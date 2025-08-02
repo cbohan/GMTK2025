@@ -15,6 +15,15 @@ public class MenuMenu : MonoBehaviour
         _catSelectionCanvasGroup.alpha = 0f;
         _catSelectionCanvasGroup.blocksRaycasts = false;
         _catSelectionCanvasGroup.interactable = false;
+
+        if (InterSceneData.GameStarted)
+        {
+            Click();
+        }
+        else
+        {
+            InterSceneData.GameStarted = true;
+        }
     }
 
     public void Click()
