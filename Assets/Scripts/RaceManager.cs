@@ -71,6 +71,15 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    public void StickyHoney()
+    {
+        foreach (RaceCat raceCat in _raceCats)
+        {
+            if (raceCat.IsPlayerControlled) continue;
+            raceCat.CurrentSpeed *= .25f;
+        }
+    }
+
     private void Update()
     {
         foreach (RaceCat raceCat in _raceCats)
@@ -119,7 +128,7 @@ public class RaceManager : MonoBehaviour
         cat.Position = Vector3.MoveTowards(
                 cat.Position,
                 cat.NextPoint.GetPosition(cat.Index),
-                distance);
+                distance * cat.ChungusMultiplier);
     }
 
     private IEnumerator ShowPlaceText()
