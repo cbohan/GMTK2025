@@ -13,7 +13,7 @@ public static class InterSceneData
 
         Ult = UltType.Sticky_Honey,
     };
-    
+
     public static CatData Oreo = new CatData()
     {
         Name = "Oreos?",
@@ -59,6 +59,8 @@ public static class InterSceneData
     public static int PlayerRacePlacement;
     
     public static bool GameStarted = false;
+
+    public static int Pulls = 0;
 
     public static CatData PlayerCat = Honey;
     public static CatData[] AiCats = new CatData[]
