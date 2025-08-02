@@ -1,9 +1,9 @@
 public enum CatImage
 { 
-    HoneyLoops,
-    TEMP_ChonkerBoi,
-    TEMP_DefinitelyACat,
-    TEMP_GreenFrootLoop,
+    Honey,
+    Loop,
+    Oreo,
+    Apple,
 }
 
 public enum StatValue

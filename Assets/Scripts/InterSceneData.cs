@@ -1,9 +1,9 @@
 public static class InterSceneData
 {
-    public static CatData HoneyLoops = new CatData()
+    public static CatData Honey = new CatData()
     {
         Name = "Honey Loops",
-        Image = CatImage.HoneyLoops,
+        Image = CatImage.Honey,
         Level = 0,
         
         Speed = StatValue.Medium,
@@ -11,10 +11,10 @@ public static class InterSceneData
         Acceleration = StatValue.Medium,
     };
 
-    public static CatData ChonkerBoi = new CatData()
+    public static CatData Loop = new CatData()
     {
-        Name = "Chonker Boi",
-        Image = CatImage.TEMP_ChonkerBoi,
+        Name = "Brother Loops",
+        Image = CatImage.Loop,
         Level = 0,
 
         Speed = StatValue.Medium,
@@ -22,10 +22,10 @@ public static class InterSceneData
         Acceleration = StatValue.Low,
     };
 
-    public static CatData DefinitelyACat = new CatData()
+    public static CatData Oreo = new CatData()
     {
-        Name = "Definitely A Cat",
-        Image = CatImage.TEMP_DefinitelyACat,
+        Name = "Oreos?",
+        Image = CatImage.Oreo,
         Level = 0,
 
         Speed = StatValue.High,
@@ -33,10 +33,10 @@ public static class InterSceneData
         Acceleration = StatValue.Low,
     };
 
-    public static CatData GreenFrootLoop = new CatData()
+    public static CatData Apple = new CatData()
     {
-        Name = "Green Froot Loop",
-        Image = CatImage.TEMP_GreenFrootLoop,
+        Name = "Jacked Cat",
+        Image = CatImage.Apple,
         Level = 0,
 
         Speed = StatValue.Medium,
@@ -46,12 +46,12 @@ public static class InterSceneData
 
     public static int PlayerRacePlacement;
 
-    public static CatData PlayerCat = HoneyLoops;
+    public static CatData PlayerCat = Honey;
     public static CatData[] AiCats = new CatData[]
     {
-        ChonkerBoi,
-        DefinitelyACat,
-        GreenFrootLoop,
+        Loop,
+        Oreo,
+        Apple,
     };
     
 }

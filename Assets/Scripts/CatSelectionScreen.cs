@@ -7,20 +7,20 @@ public class CatSelectionScreen : MonoBehaviour
     private void Awake()
     {
         AddCatSelectionButton(
-            InterSceneData.HoneyLoops, 
-            new CatData[] { InterSceneData.ChonkerBoi, InterSceneData.DefinitelyACat, InterSceneData.GreenFrootLoop });
+            InterSceneData.Honey, 
+            new CatData[] { InterSceneData.Loop, InterSceneData.Oreo, InterSceneData.Apple });
 
         AddCatSelectionButton(
-            InterSceneData.ChonkerBoi,
-            new CatData[] { InterSceneData.HoneyLoops, InterSceneData.DefinitelyACat, InterSceneData.GreenFrootLoop });
+            InterSceneData.Loop,
+            new CatData[] { InterSceneData.Honey, InterSceneData.Oreo, InterSceneData.Apple });
 
         AddCatSelectionButton(
-            InterSceneData.DefinitelyACat,
-            new CatData[] { InterSceneData.HoneyLoops, InterSceneData.ChonkerBoi, InterSceneData.GreenFrootLoop });
+            InterSceneData.Oreo,
+            new CatData[] { InterSceneData.Honey, InterSceneData.Loop, InterSceneData.Apple });
 
         AddCatSelectionButton(
-            InterSceneData.GreenFrootLoop,
-            new CatData[] { InterSceneData.HoneyLoops, InterSceneData.ChonkerBoi, InterSceneData.DefinitelyACat });
+            InterSceneData.Apple,
+            new CatData[] { InterSceneData.Honey, InterSceneData.Loop, InterSceneData.Oreo });
     }
 
     private void AddCatSelectionButton(CatData catData, CatData[] aiCats)
