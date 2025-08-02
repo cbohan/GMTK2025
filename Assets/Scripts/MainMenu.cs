@@ -10,6 +10,8 @@ public class MenuMenu : MonoBehaviour
     [SerializeField] private GameObject _gatchaMenu;
     [SerializeField] private Button _gatchaButton;
     [SerializeField] private TMP_Text _gatchaPulls;
+    [SerializeField] private AudioSource _boomBox;
+    [SerializeField] private AudioClip _characterMusic;
 
 
     private void Awake()
@@ -40,6 +42,9 @@ public class MenuMenu : MonoBehaviour
 
     public void Click()
     {
+        _boomBox.Stop();
+        _boomBox.clip = _characterMusic;
+        _boomBox.Play();
         _gatchaMenu.SetActive(true);
         if (InterSceneData.Pulls < 1)
         {
