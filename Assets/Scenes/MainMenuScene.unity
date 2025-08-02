@@ -337,7 +337,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -107}
   m_SizeDelta: {x: 960, y: 128}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &322008352
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Neko Loop Racers
+  m_text: 'Neko Kokumotsu: Frosted Derby'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a8fa3d3c3442dc47bf54500748c819e, type: 2}
   m_sharedMaterial: {fileID: -1364736605981962902, guid: 6a8fa3d3c3442dc47bf54500748c819e, type: 2}
