@@ -12,10 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b98b10064adef4a826e0567bb10b74, type: 3}
   m_Name: ImageLookup
   m_EditorClassIdentifier: 
-  HoneyRace: {fileID: 2800000, guid: a7d5843bce75bb34782319b894af106e, type: 3}
-  LoopRace: {fileID: 2800000, guid: a4e8e7f683abdca4d93d5ed0fb80ae9d, type: 3}
-  OreoRace: {fileID: 2800000, guid: ec545c89995efd94c866e6f9377fadb6, type: 3}
-  AppleRace: {fileID: 2800000, guid: c8b092a9490bbd04a94ab8d8fb012456, type: 3}
+  HoneyRace: {fileID: 2800000, guid: b40718a235817a84a9be2c6fb5072d56, type: 3}
+  HoneyRaceFront: {fileID: 2800000, guid: e61ed312dfb929f40b83f0f09eeb3b38, type: 3}
+  HoneyRaceBack: {fileID: 2800000, guid: dec11b1346a67074aa65d1acb0a5284a, type: 3}
+  LoopRace: {fileID: 2800000, guid: 86b349d170554d541b5ba72a648a8595, type: 3}
+  LoopRaceFront: {fileID: 2800000, guid: f270b128891c5cf4e8a9b9e37cf7be17, type: 3}
+  LoopRaceBack: {fileID: 2800000, guid: 00007ba4cbebf9e46aa8ea22c3c1b4b5, type: 3}
+  OreoRace: {fileID: 2800000, guid: 40996b7e68a47994b9cab09c40d5cd2b, type: 3}
+  OreoRaceFront: {fileID: 2800000, guid: 5e578c7cc9a96d14abb8a32c6b666e52, type: 3}
+  OreoRaceBack: {fileID: 2800000, guid: ab8fc1a9c80282146bd015ef151953ba, type: 3}
+  AppleRace: {fileID: 2800000, guid: 9c12df11aa598394b8e51dc0311c0b32, type: 3}
+  AppleRaceFront: {fileID: 2800000, guid: 365f185ff3caeef4a836067d3f5f327e, type: 3}
+  AppleRaceBack: {fileID: 2800000, guid: 957defd177ab7e146a4330cc1a6acb65, type: 3}
   Honey: {fileID: 2800000, guid: 15f4cf37dab6c604fa6a00aec6abc38a, type: 3}
   Loop: {fileID: 2800000, guid: 075d78bd1b8737344a87da87e06ba55d, type: 3}
   Oreo: {fileID: 2800000, guid: 03539656bc21ce84787391afe6514a31, type: 3}

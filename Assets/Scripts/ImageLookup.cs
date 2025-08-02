@@ -6,9 +6,17 @@ public class ImageLookup : ScriptableObject
 {
     [Header("Race Textures")]
     public Texture HoneyRace;
+    public Texture HoneyRaceFront;
+    public Texture HoneyRaceBack;
     public Texture LoopRace;
+    public Texture LoopRaceFront;
+    public Texture LoopRaceBack;
     public Texture OreoRace;
+    public Texture OreoRaceFront;
+    public Texture OreoRaceBack;
     public Texture AppleRace;
+    public Texture AppleRaceFront;
+    public Texture AppleRaceBack;
 
     [Header("Non Race Textures")]
     public Texture Honey;
@@ -47,6 +55,38 @@ public class ImageLookup : ScriptableObject
             case CatImage.Apple:
             default:
                 return AppleRace;
+        }
+    }
+
+    public Texture GetRaceTextureFront(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyRaceFront;
+            case CatImage.Loop:
+                return LoopRaceFront;
+            case CatImage.Oreo:
+                return OreoRaceFront;
+            case CatImage.Apple:
+            default:
+                return AppleRaceFront;
+        }
+    }
+
+    public Texture GetRaceTextureBack(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyRaceBack;
+            case CatImage.Loop:
+                return LoopRaceBack;
+            case CatImage.Oreo:
+                return OreoRaceBack;
+            case CatImage.Apple:
+            default:
+                return AppleRaceBack;
         }
     }
 

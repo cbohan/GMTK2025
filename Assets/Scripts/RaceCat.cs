@@ -31,6 +31,8 @@ public class RaceCat : MonoBehaviour
     public Transform VisualsParentTransform;
     public Transform VisualsTransform;
     public MeshRenderer SideRenderer;
+    public MeshRenderer FrontRenderer;
+    public MeshRenderer BackRenderer;
     public ImageLookup ImageLookup;
 
     [HideInInspector] public int Index;
@@ -101,6 +103,8 @@ public class RaceCat : MonoBehaviour
         if (data.Acceleration == StatValue.High) Acceleration = 2.5f;
 
         SideRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTexture(data.Image));
+        FrontRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTextureFront(data.Image));
+        BackRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTextureBack(data.Image));
 
         _ultType = data.Ult;
     }
