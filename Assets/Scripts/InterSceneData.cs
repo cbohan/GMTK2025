@@ -4,7 +4,8 @@ public static class InterSceneData
     {
         Name = "Honey Loops",
         Image = CatImage.HoneyLoops,
-
+        Level = 0,
+        
         Speed = StatValue.Medium,
         Stamina = StatValue.Medium,
         Acceleration = StatValue.Medium,
@@ -14,6 +15,7 @@ public static class InterSceneData
     {
         Name = "Chonker Boi",
         Image = CatImage.TEMP_ChonkerBoi,
+        Level = 0,
 
         Speed = StatValue.Medium,
         Stamina = StatValue.High,
@@ -24,6 +26,7 @@ public static class InterSceneData
     {
         Name = "Definitely A Cat",
         Image = CatImage.TEMP_DefinitelyACat,
+        Level = 0,
 
         Speed = StatValue.High,
         Stamina = StatValue.Medium,
@@ -34,6 +37,7 @@ public static class InterSceneData
     {
         Name = "Green Froot Loop",
         Image = CatImage.TEMP_GreenFrootLoop,
+        Level = 0,
 
         Speed = StatValue.Medium,
         Stamina = StatValue.Low,
