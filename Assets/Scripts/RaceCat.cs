@@ -140,6 +140,15 @@ public class RaceCat : MonoBehaviour
 
     public void SpeedUp(float amount, bool updatesUltMeter = true)
     {
+        if (InterSceneData.PlayerCat.Ability == AbilityType.ShorterLines)
+        {
+            amount *= Mathf.Pow(.9f, InterSceneData.PlayerCat.Level);
+        }
+        else if (InterSceneData.PlayerCat.Ability == AbilityType.LongerLines)
+        {
+            amount *= Mathf.Pow(1.25f, InterSceneData.PlayerCat.Level);
+        }
+
         CurrentSpeed += Acceleration * amount;
 
         if (IsPlayerControlled && updatesUltMeter)
@@ -213,14 +222,25 @@ public class RaceCat : MonoBehaviour
             VisualsTransform.eulerAngles.y,
             _rotation);
 
-        VisualsTransform.localScale = Vector3.one * ChungusMultiplier;
-        VisualsTransform.localPosition = Vector3.up * (ChungusMultiplier * .5f);
+        float scaleMult = ChungusMultiplier;
+        if (IsPlayerControlled)
+        {
+            scaleMult *= InterSceneData.PlayerCat.Ability == AbilityType.SizeAndSpeedBoost ?
+                Mathf.Pow(1.15f, InterSceneData.PlayerCat.Level) :
+                1f;
+        }
+        VisualsTransform.localScale = Vector3.one * scaleMult;
+        VisualsTransform.localPosition = Vector3.up * (scaleMult * .5f);
     }
 
     private void UpdateUI()
     {
         if (!IsPlayerControlled || FinishedRace) return;
 
-        UIHUD.Instance.SetSpeed(CurrentSpeed * ChungusMultiplier);
+        float speedMult = ChungusMultiplier;
+        speedMult *= InterSceneData.PlayerCat.Ability == AbilityType.SizeAndSpeedBoost ?
+            Mathf.Pow(1.15f, InterSceneData.PlayerCat.Level) :
+            1f;
+        UIHUD.Instance.SetSpeed(CurrentSpeed * speedMult);
     }
 }

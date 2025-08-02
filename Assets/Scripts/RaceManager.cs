@@ -125,10 +125,18 @@ public class RaceManager : MonoBehaviour
             }
         }
 
+        float distanceMult = cat.ChungusMultiplier;
+        if (cat.IsPlayerControlled)
+        {
+            distanceMult *= InterSceneData.PlayerCat.Ability == AbilityType.SizeAndSpeedBoost ?
+                Mathf.Pow(1.15f, InterSceneData.PlayerCat.Level) :
+                1f; 
+        }
+
         cat.Position = Vector3.MoveTowards(
                 cat.Position,
                 cat.NextPoint.GetPosition(cat.Index),
-                distance * cat.ChungusMultiplier);
+                distance * distanceMult);
     }
 
     private IEnumerator ShowPlaceText()
