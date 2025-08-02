@@ -40,12 +40,12 @@ public class RaceCat : MonoBehaviour
     [HideInInspector] public RacePoint LastPoint;
     [HideInInspector] public RacePoint NextPoint;
     [HideInInspector] public bool FinishedRace;
+    [HideInInspector] public int Difficulty;
 
     private float _ultMeter;
     private float _aiBoostTimer;
     private float _rotation;
 
-    private float _surgeSpeedMult = 1f;
     private float _sugarRushTimer = 0f;
     private float _preSugarRushSpeed;
 
@@ -62,7 +62,7 @@ public class RaceCat : MonoBehaviour
 
     private void Ult()
     {
-        if (!IsPlayerControlled || !_ultInput.action.WasPressedThisFrame()) return;
+        if (!IsPlayerControlled || !_ultInput.action.WasPressedThisFrame() || _ultMeter < .99f) return;
 
         if (_ultType == UltType.Sticky_Honey)
         {
@@ -75,7 +75,7 @@ public class RaceCat : MonoBehaviour
         }
         else if (_ultType == UltType.Apple_Jacked)
         {
-            _surgeSpeedMult = 2f;
+            CurrentSpeed = MaxSpeed * 2f;
         }
         else if (_ultType == UltType.Chungus_Mode)
         {
@@ -124,8 +124,8 @@ public class RaceCat : MonoBehaviour
 
         if (_aiBoostTimer <= 0)
         {
-            _aiBoostTimer = Random.Range(BoostFrequency.x, BoostFrequency.y);
-            float boostAmount = Random.Range(BoostQuality.x, BoostQuality.y);
+            _aiBoostTimer = Random.Range(BoostFrequency.x, BoostFrequency.y) * Mathf.Pow(.75f, Difficulty);
+            float boostAmount = Random.Range(BoostQuality.x, BoostQuality.y + (Difficulty * .75f));
 
             if (boostAmount > 3f)
             {
@@ -174,7 +174,12 @@ public class RaceCat : MonoBehaviour
         if (FinishedRace) return;
 
         float trotSpeed = MaxSpeed * TrotSpeedMult;
-        if (CurrentSpeed > trotSpeed)
+
+        if (CurrentSpeed > MaxSpeed)
+        {
+            CurrentSpeed -= SlowdownRate * 6f * Time.deltaTime;
+        }
+        else if (CurrentSpeed > trotSpeed)
         {
             CurrentSpeed -= SlowdownRate * Time.deltaTime;
             if (CurrentSpeed < trotSpeed) CurrentSpeed = trotSpeed;
@@ -185,8 +190,11 @@ public class RaceCat : MonoBehaviour
             if (CurrentSpeed > trotSpeed) CurrentSpeed = trotSpeed;
         }
 
-        CurrentSpeed = Mathf.Clamp(CurrentSpeed, 0f, MaxSpeed);
-        CurrentSpeed *= Mathf.Max(_surgeSpeedMult, 1f);
+        if (CurrentSpeed <= 0)
+        {
+            CurrentSpeed = 0;
+        }
+
         if (_sugarRushTimer > 0)
         {
             float sugarRushT = 1f;
@@ -197,9 +205,6 @@ public class RaceCat : MonoBehaviour
             }
             CurrentSpeed = Mathf.Lerp(_preSugarRushSpeed, 10f, sugarRushT);
         }
-
-        _surgeSpeedMult -= Time.deltaTime / 2f;
-        _surgeSpeedMult = Mathf.Max(_surgeSpeedMult, 1f);
 
         _sugarRushTimer -= Time.deltaTime;
     }

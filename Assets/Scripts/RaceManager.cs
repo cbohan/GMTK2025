@@ -38,6 +38,7 @@ public class RaceManager : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             AICats[i].SetData(InterSceneData.AiCats[i]);
+            AICats[i].Difficulty = i;
             _raceCats.Add(AICats[i]);
         }
 
@@ -77,7 +78,7 @@ public class RaceManager : MonoBehaviour
         foreach (RaceCat raceCat in _raceCats)
         {
             if (raceCat.IsPlayerControlled) continue;
-            raceCat.CurrentSpeed *= .25f;
+            raceCat.CurrentSpeed *= .35f;
         }
     }
 
