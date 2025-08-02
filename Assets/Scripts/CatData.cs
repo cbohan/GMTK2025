@@ -21,6 +21,14 @@ public enum UltType
     Chungus_Mode, // Get big, slightly increase in speed, crush cats in front of you 
 }
 
+public enum AbilityType
+{
+    BiggerLines,
+    ShorterLines,
+    LongerLines,
+    SizeAndSpeedBoost,
+}
+
 public struct CatData
 {
     public string Name;
@@ -34,5 +42,7 @@ public struct CatData
     public StatValue Speed;
     public StatValue Acceleration;
     public StatValue Stamina;
+
     public UltType Ult;
+    public AbilityType Ability;
 }

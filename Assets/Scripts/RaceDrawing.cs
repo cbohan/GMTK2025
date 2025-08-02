@@ -45,13 +45,21 @@ public class RaceDrawing : MonoBehaviour
 
         float currentAngle = Random.Range(0f, 360f);
         float rotationAmount = Random.Range(3f, 6f);
-        float stepSize = Random.Range(10f, 14f);
+        float stepSize = 10f;
 
         Vector2 drift = new Vector2(Random.Range(0, 2.5f), Random.Range(0f, 2.5f));
         drift.x *= point.x > (1920f / 2f) ? -1f : 1f;
         drift.y *= point.y > (1080f / 2f) ? -1f : 1f;
 
         int numSteps = Random.Range(70, 130);
+        if (InterSceneData.PlayerCat.Ability == AbilityType.ShorterLines)
+        {
+            numSteps = Mathf.RoundToInt(numSteps * Mathf.Pow(.7f, InterSceneData.PlayerCat.Level));
+        }
+        else if (InterSceneData.PlayerCat.Ability == AbilityType.LongerLines)
+        { 
+            numSteps = Mathf.RoundToInt(numSteps * Mathf.Pow(1.15f, InterSceneData.PlayerCat.Level));
+        }
 
         _targetMesh = StartMesh(point, _targetMesh, _targetMaterial, _targetRenderer);
         _targetPoints.Clear();
@@ -130,6 +138,13 @@ public class RaceDrawing : MonoBehaviour
         return lineMesh;
     }
 
+    private float GetLineThicknessMult()
+    {
+        return InterSceneData.PlayerCat.Ability == AbilityType.BiggerLines ?
+                Mathf.Pow(1.2f, InterSceneData.PlayerCat.Level) :
+                1f;
+    }
+
     private void ContinueMesh(
         Vector2 point, 
         Mesh lineMesh, 
@@ -146,10 +161,12 @@ public class RaceDrawing : MonoBehaviour
 
         int vIndex = vertices.Length - 4;
 
+        float lineThicknessMult = GetLineThicknessMult();
+
         Vector2 mouseForward = (point - lastPoint).normalized;
         Vector2 offsetVector = Rotate(mouseForward, 90f);
-        Vector2 upVertex = point + (offsetVector * LineThickness);
-        Vector2 downVertex = point - (offsetVector * LineThickness);
+        Vector2 upVertex = point + (offsetVector * LineThickness * lineThicknessMult);
+        Vector2 downVertex = point - (offsetVector * LineThickness * lineThicknessMult);
 
         vertices[vIndex + 2] = upVertex;
         vertices[vIndex + 3] = downVertex;
@@ -183,7 +200,7 @@ public class RaceDrawing : MonoBehaviour
         int drawIndex = goForward ? 0 : _drawnPoints.Count - 1;
         int increment = goForward ? 1 : -1;
         float cumulativeDistance = 0f;
-        float graceDistance = 10f;
+        float graceDistance = 10f * GetLineThicknessMult();
 
         foreach (Vector2 point in _targetPoints)
         {
