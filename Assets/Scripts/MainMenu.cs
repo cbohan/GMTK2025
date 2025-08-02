@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class MenuMenu : MonoBehaviour
     [SerializeField] private CanvasGroup _catSelectionCanvasGroup;
     [SerializeField] private GameObject _gatchaMenu;
     [SerializeField] private Button _gatchaButton;
+    [SerializeField] private TMP_Text _gatchaPulls;
 
 
     private void Awake()
@@ -31,6 +33,11 @@ public class MenuMenu : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        _gatchaPulls.text = $"{InterSceneData.Pulls}";
+    }
+
     public void Click()
     {
         _gatchaMenu.SetActive(true);
@@ -49,6 +56,7 @@ public class MenuMenu : MonoBehaviour
 
     public void GatchaClick()
     {
+        InterSceneData.Pulls--;
         SceneManager.LoadScene("GatchaAnimation");
     }
 }

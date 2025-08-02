@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RaceManager : MonoBehaviour
 {
@@ -159,7 +160,8 @@ public class RaceManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-
+        InterSceneData.Pulls += 4 - InterSceneData.PlayerRacePlacement;
+        SceneManager.LoadScene("MainMenuScene");
     }
 
     private RacePoint GetNextRacePoint(RacePoint point)
