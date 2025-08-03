@@ -101,6 +101,7 @@ public class RaceManager : MonoBehaviour
                 {
                     InterSceneData.PlayerRacePlacement = _aiCatsThatHaveFinishedTheRace;
                     cat.PlayFinishVoiceLine();
+                    StartCoroutine(FadeOutDrawingCanvas());
                 }
                 else if (!cat.FinishedRace && !cat.IsPlayerControlled)
                 {
@@ -142,11 +143,8 @@ public class RaceManager : MonoBehaviour
                 distance * distanceMult);
     }
 
-    private IEnumerator ShowPlaceText()
+    private IEnumerator FadeOutDrawingCanvas()
     {
-        _placeText.text = GetPlacementText();
-        _placeText.gameObject.SetActive(true);
-
         _drawingCanvasGroup.blocksRaycasts = false;
         _drawingCanvasGroup.interactable = false;
 
@@ -154,8 +152,22 @@ public class RaceManager : MonoBehaviour
         while (alpha < 1f)
         {
             alpha += Time.deltaTime * 3f;
-            _placeTextCanvasGroup.alpha = alpha;
             _drawingCanvasGroup.alpha = 1 - alpha;
+
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private IEnumerator ShowPlaceText()
+    {
+        _placeText.text = GetPlacementText();
+        _placeText.gameObject.SetActive(true);
+
+        float alpha = 0f;
+        while (alpha < 1f)
+        {
+            alpha += Time.deltaTime * 3f;
+            _placeTextCanvasGroup.alpha = alpha;
 
             yield return new WaitForEndOfFrame();
         }
