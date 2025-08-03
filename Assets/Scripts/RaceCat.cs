@@ -103,19 +103,27 @@ public class RaceCat : MonoBehaviour
 
     public void SetData(CatData data)
     { 
-        TrotSpeedMult = .5f;
+        
+        if (!IsPlayerControlled)
+        {
+            TrotSpeedMult = .5f;
+        }
+        else
+        {
+            TrotSpeedMult = 0f;
+        }
 
-        MaxSpeed = 5f;
-        if (data.Speed == StatValue.Low) MaxSpeed = 4;
-        if (data.Speed == StatValue.High) MaxSpeed = 6;
+        MaxSpeed = 6f;
+        if (data.Speed == StatValue.Low) MaxSpeed = 5;
+        if (data.Speed == StatValue.High) MaxSpeed = 7;
 
-        SlowdownRate = .1f;
-        if (data.Stamina == StatValue.Low) SlowdownRate = .15f;
-        if (data.Stamina == StatValue.Low) SlowdownRate = .05f;
+        SlowdownRate = .2f;
+        if (data.Stamina == StatValue.Low) SlowdownRate = .3f;
+        if (data.Stamina == StatValue.High) SlowdownRate = .1f;
 
-        Acceleration = 2f;
-        if (data.Acceleration == StatValue.Low) Acceleration = 1.5f;
-        if (data.Acceleration == StatValue.High) Acceleration = 2.5f;
+        Acceleration = 3f;
+        if (data.Acceleration == StatValue.Low) Acceleration = 2.5f;
+        if (data.Acceleration == StatValue.High) Acceleration = 3.5f;
 
         SideRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTexture(data.Image));
         FrontRenderer.material.SetTexture("_BaseMap", ImageLookup.GetRaceTextureFront(data.Image));
@@ -159,6 +167,7 @@ public class RaceCat : MonoBehaviour
 
     public void SpeedUp(float amount, bool updatesUltMeter = true)
     {
+        amount += InterSceneData.PlayerCat.Level * 0.1f;
         if (InterSceneData.PlayerCat.Ability == AbilityType.ShorterLines)
         {
             amount *= Mathf.Pow(.9f, InterSceneData.PlayerCat.Level);
@@ -260,8 +269,11 @@ public class RaceCat : MonoBehaviour
         }
         else
         {
-            CurrentSpeed += SlowdownRate * 5f * Time.deltaTime;
-            if (CurrentSpeed > trotSpeed) CurrentSpeed = trotSpeed;
+            if (!IsPlayerControlled)
+            {
+                CurrentSpeed += SlowdownRate * 5f * Time.deltaTime;
+                if (CurrentSpeed > trotSpeed) CurrentSpeed = trotSpeed;
+            }
         }
 
         if (CurrentSpeed <= 0)

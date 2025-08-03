@@ -220,17 +220,17 @@ public class RaceDrawing : MonoBehaviour
         if (score < 5)
         {
             RaceDrawingTextManager.OnSpawnText.Invoke("Excellent", _drawnPoints[drawIndex]);
-            RaceManager.Instance.PlayerCat.SpeedUp(1f);
+            RaceManager.Instance.PlayerCat.SpeedUp(.6f);
         }
         else if (score < 10)
         {
             RaceDrawingTextManager.OnSpawnText.Invoke("Good", _drawnPoints[drawIndex]);
-            RaceManager.Instance.PlayerCat.SpeedUp(.75f);
+            RaceManager.Instance.PlayerCat.SpeedUp(.4f);
         }
         else if (score < 20)
         {
             RaceDrawingTextManager.OnSpawnText.Invoke("OK", _drawnPoints[drawIndex]);
-            RaceManager.Instance.PlayerCat.SpeedUp(.5f);
+            RaceManager.Instance.PlayerCat.SpeedUp(.2f);
         }
         else
         {
