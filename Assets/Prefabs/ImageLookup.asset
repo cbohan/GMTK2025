@@ -24,6 +24,10 @@ MonoBehaviour:
   AppleRace: {fileID: 2800000, guid: 9c12df11aa598394b8e51dc0311c0b32, type: 3}
   AppleRaceFront: {fileID: 2800000, guid: 365f185ff3caeef4a836067d3f5f327e, type: 3}
   AppleRaceBack: {fileID: 2800000, guid: 957defd177ab7e146a4330cc1a6acb65, type: 3}
+  HoneyUltImg: {fileID: 21300000, guid: d9978ad3a95c4ab4981502dc2ac28e3e, type: 3}
+  LoopUltImg: {fileID: 21300000, guid: 4f4433c499636f549a7f0c6b32e7acb4, type: 3}
+  OreoUltImg: {fileID: 21300000, guid: e29f8e3ba2822e64996a7f2affa4fe48, type: 3}
+  AppleUltImg: {fileID: 21300000, guid: 3bd042782b2001e42b4005a7702aabbe, type: 3}
   Honey: {fileID: 2800000, guid: 15f4cf37dab6c604fa6a00aec6abc38a, type: 3}
   Loop: {fileID: 2800000, guid: 075d78bd1b8737344a87da87e06ba55d, type: 3}
   Oreo: {fileID: 2800000, guid: 03539656bc21ce84787391afe6514a31, type: 3}
@@ -45,6 +49,7 @@ MonoBehaviour:
   Apple3: {fileID: 2800000, guid: e932d0dec22dc7b44aa77ab10c92f53e, type: 3}
   Apple4: {fileID: 2800000, guid: 889aa614e2e47834fa544603200f60fe, type: 3}
   HoneyPull: {fileID: 8300000, guid: 72d042f83efca384d975977e14f875ea, type: 3}
+  HoneyUltSFX: {fileID: 8300000, guid: 223e38fa0ba499742b1d418333ea344c, type: 3}
   HoneyUlt:
   - {fileID: 8300000, guid: 7072f27eddfad4f4880c29bee0628f68, type: 3}
   - {fileID: 8300000, guid: 33e56d05892b7174987c2c992ab91d15, type: 3}
@@ -59,6 +64,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 53877559aaf4be340b7cef914ae32a93, type: 3}
   - {fileID: 8300000, guid: acff2bac3ba21d648b85ff05fa003446, type: 3}
   OreoPull: {fileID: 8300000, guid: e9303c7884818a14faa2a0c09a7c06f4, type: 3}
+  OreoUltSFX: {fileID: 8300000, guid: f31cac117d963d34ca7340327a1a703b, type: 3}
   OreoUlt:
   - {fileID: 8300000, guid: ef36f97fd0a7fb742a9d0bbb0d677bd8, type: 3}
   - {fileID: 8300000, guid: 021dc96cecb48784e8bde987c4a48513, type: 3}
@@ -71,11 +77,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3954157bb3e092343a92b748d8c439ce, type: 3}
   - {fileID: 8300000, guid: a640d8b62a303f242aaf555eff915781, type: 3}
   - {fileID: 8300000, guid: b548a013a9708b041bf3ba93b280ce52, type: 3}
-  ApplePull: {fileID: 0}
-  AppleUlt: []
-  AppleWin: []
-  AppleLose: []
+  ApplePull: {fileID: 8300000, guid: ad451931b97fe0f4995d2bbe0e631e59, type: 3}
+  AppleUltSFX: {fileID: 8300000, guid: 8cac4824fb70d954b986b7ce9389459c, type: 3}
+  AppleUlt:
+  - {fileID: 8300000, guid: a46499447f39e1048af28764b41058b0, type: 3}
+  - {fileID: 8300000, guid: 6808a1fcc9d07104fba743141dea41b4, type: 3}
+  AppleWin:
+  - {fileID: 8300000, guid: 72779d5e1df6c86479c0b38cc6eef005, type: 3}
+  - {fileID: 8300000, guid: 090afde9f1674f3409c78144473b5cf2, type: 3}
+  AppleLose:
+  - {fileID: 8300000, guid: bdf3e4f73acc72049a5623a76446c52f, type: 3}
+  - {fileID: 8300000, guid: dc6ffd6a35d56cd4295332c0f1325ee1, type: 3}
   LoopPull: {fileID: 8300000, guid: 6428fa5eb327e9d4eaaea6fe6c21a54a, type: 3}
+  LoopUltSFX: {fileID: 8300000, guid: 4b23ce2435f95ca4b8cd0c62ecc8a56a, type: 3}
   LoopUlt:
   - {fileID: 8300000, guid: 9b491785326f9284d8f35418d4f186be, type: 3}
   - {fileID: 8300000, guid: 30a193d9a7b5036488555918e12497f7, type: 3}

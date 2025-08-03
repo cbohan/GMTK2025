@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class RaceCat : MonoBehaviour
 {
@@ -35,6 +37,7 @@ public class RaceCat : MonoBehaviour
     public MeshRenderer BackRenderer;
     public ImageLookup ImageLookup;
     public AudioSource VoiceOver;
+    public Image UltBanner;
 
     [HideInInspector] public int Index;
     [HideInInspector] public float CurrentSpeed = 0f;
@@ -67,35 +70,36 @@ public class RaceCat : MonoBehaviour
     {
         if (!IsPlayerControlled || !_ultInput.action.WasPressedThisFrame() || _ultMeter < .99f) return;
 
+        VoiceOver.Stop();
         if (_ultType == UltType.Sticky_Honey)
         {
             RaceManager.Instance.StickyHoney();
-            VoiceOver.Stop();
-            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Honey.Image);
-            VoiceOver.Play();
+            UltBanner.sprite = ImageLookup.GetRaceUltTexture(InterSceneData.Honey.Image);
+            VoiceOver.clip = ImageLookup.GetAudioUltSFX(InterSceneData.Honey.Image);
         }
         else if (_ultType == UltType.Sugar_Rush)
         {
             _preSugarRushSpeed = CurrentSpeed;
             _sugarRushTimer = SUGAR_RUSH_DURATION;
-            VoiceOver.Stop();
-            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Oreo.Image);
-            VoiceOver.Play();
+            UltBanner.sprite = ImageLookup.GetRaceUltTexture(InterSceneData.Oreo.Image);
+            VoiceOver.clip = ImageLookup.GetAudioUltSFX(InterSceneData.Oreo.Image);
         }
         else if (_ultType == UltType.Apple_Jacked)
         {
             CurrentSpeed = MaxSpeed * 2f;
-            VoiceOver.Stop();
-            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Apple.Image);
-            VoiceOver.Play();
+            UltBanner.sprite = ImageLookup.GetRaceUltTexture(InterSceneData.Apple.Image);
+            VoiceOver.clip = ImageLookup.GetAudioUltSFX(InterSceneData.Apple.Image);
         }
         else if (_ultType == UltType.Chungus_Mode)
         {
             ChungusMultiplier = 1.5f;
-            VoiceOver.Stop();
-            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Loop.Image);
-            VoiceOver.Play();
+            UltBanner.sprite = ImageLookup.GetRaceUltTexture(InterSceneData.Loop.Image);
+            VoiceOver.clip = ImageLookup.GetAudioUltSFX(InterSceneData.Loop.Image);
         }
+        VoiceOver.Play();
+        UltBanner.enabled = true;
+        
+        StartCoroutine(DropBanner());
 
         _ultMeter = 0;
         UIHUD.Instance.SetUlt(_ultMeter);
@@ -134,6 +138,7 @@ public class RaceCat : MonoBehaviour
 
     public void Init()
     {
+        if (IsPlayerControlled) UltBanner.enabled = false;
         CurrentSpeed = 0; //MaxSpeed * .75f;
         _aiBoostTimer = Random.Range(BoostFrequency.x, BoostFrequency.y);
         UIHUD.Instance.SetUlt(0f);
@@ -337,5 +342,30 @@ public class RaceCat : MonoBehaviour
             Mathf.Pow(1.15f, InterSceneData.PlayerCat.Level) :
             1f;
         UIHUD.Instance.SetSpeed(CurrentSpeed * speedMult);
+    }
+    
+    private IEnumerator DropBanner()
+    {
+        yield return new WaitForSeconds(0.5f);
+        UltBanner.enabled = false;
+
+        VoiceOver.Stop();
+        if (_ultType == UltType.Sticky_Honey)
+        {
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Honey.Image);
+        }
+        else if (_ultType == UltType.Sugar_Rush)
+        {
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Oreo.Image);
+        }
+        else if (_ultType == UltType.Apple_Jacked)
+        {
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Apple.Image);
+        }
+        else if (_ultType == UltType.Chungus_Mode)
+        {
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Loop.Image);
+        }
+        VoiceOver.Play();
     }
 }

@@ -179,7 +179,7 @@ public class RaceManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f + (0.5f * InterSceneData.PlayerRacePlacement));
 
         InterSceneData.Pulls += 4 - InterSceneData.PlayerRacePlacement;
         SceneManager.LoadScene("MainMenuScene");

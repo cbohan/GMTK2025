@@ -18,6 +18,12 @@ public class ImageLookup : ScriptableObject
     public Texture AppleRaceFront;
     public Texture AppleRaceBack;
 
+    [Header("Ult Race Textures")]
+    public Sprite HoneyUltImg;
+    public Sprite LoopUltImg;
+    public Sprite OreoUltImg;
+    public Sprite AppleUltImg;
+
     [Header("Non Race Textures")]
     public Texture Honey;
     public Texture Loop;
@@ -44,18 +50,22 @@ public class ImageLookup : ScriptableObject
 
     [Header("Sound Clips")]
     public AudioClip HoneyPull;
+    public AudioClip HoneyUltSFX;
     public AudioClip[] HoneyUlt;
     public AudioClip[] HoneyWin;
     public AudioClip[] HoneyLose;
     public AudioClip OreoPull;
+    public AudioClip OreoUltSFX;
     public AudioClip[] OreoUlt;
     public AudioClip[] OreoWin;
     public AudioClip[] OreoLose;
     public AudioClip ApplePull;
+    public AudioClip AppleUltSFX;
     public AudioClip[] AppleUlt;
     public AudioClip[] AppleWin;
     public AudioClip[] AppleLose;
     public AudioClip LoopPull;
+    public AudioClip LoopUltSFX;
     public AudioClip[] LoopUlt;
     public AudioClip[] LoopWin;
     public AudioClip[] LoopLose;
@@ -89,6 +99,22 @@ public class ImageLookup : ScriptableObject
             case CatImage.Apple:
             default:
                 return AppleUlt[Random.Range(0,AppleUlt.Length)];
+        }
+    }
+
+    public AudioClip GetAudioUltSFX(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyUltSFX;
+            case CatImage.Loop:
+                return LoopUltSFX;
+            case CatImage.Oreo:
+                return OreoUltSFX;
+            case CatImage.Apple:
+            default:
+                return AppleUltSFX;
         }
     }
     
@@ -137,6 +163,22 @@ public class ImageLookup : ScriptableObject
             case CatImage.Apple:
             default:
                 return AppleRace;
+        }
+    }
+
+    public Sprite GetRaceUltTexture(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyUltImg;
+            case CatImage.Loop:
+                return LoopUltImg;
+            case CatImage.Oreo:
+                return OreoUltImg;
+            case CatImage.Apple:
+            default:
+                return AppleUltImg;
         }
     }
 

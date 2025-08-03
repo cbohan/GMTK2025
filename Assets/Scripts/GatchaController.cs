@@ -106,7 +106,6 @@ public class GatchaController : MonoBehaviour
         _GatchaTextEffect.SetActive(true);
         _NextButton.SetActive(true);
         _GatchaAudio.Play();
-
     }
 
     public void Click()
