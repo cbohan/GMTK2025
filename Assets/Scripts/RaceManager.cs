@@ -21,6 +21,7 @@ public class RaceManager : MonoBehaviour
 
     private List<RaceCat> _raceCats = new List<RaceCat>();
     private int _aiCatsThatHaveFinishedTheRace = 0;
+    private float _aiCatSpeedMult = 1f;
 
     private void Awake()
     {
@@ -134,7 +135,13 @@ public class RaceManager : MonoBehaviour
         {
             distanceMult *= InterSceneData.PlayerCat.Ability == AbilityType.SizeAndSpeedBoost ?
                 Mathf.Pow(1.15f, InterSceneData.PlayerCat.Level) :
-                1f; 
+                1f;
+        }
+        else if (PlayerCat.FinishedRace)
+        {
+            _aiCatSpeedMult += Time.deltaTime;
+            _aiCatSpeedMult = Mathf.Clamp(_aiCatSpeedMult, 0f, 2f);
+            distanceMult *= _aiCatSpeedMult;
         }
 
         cat.Position = Vector3.MoveTowards(
