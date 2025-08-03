@@ -126,7 +126,7 @@ public class RaceCat : MonoBehaviour
 
     public void Init()
     {
-        CurrentSpeed = MaxSpeed * .75f;
+        CurrentSpeed = 0; //MaxSpeed * .75f;
         _aiBoostTimer = Random.Range(BoostFrequency.x, BoostFrequency.y);
         UIHUD.Instance.SetUlt(0f);
     }

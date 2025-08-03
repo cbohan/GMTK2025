@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RacePoint : MonoBehaviour
 {
-    private const float DISTANCE_BETWEEN_CATS = .5f;
+    private const float DISTANCE_BETWEEN_CATS = .05f;
 
     private void OnDrawGizmos()
     {
