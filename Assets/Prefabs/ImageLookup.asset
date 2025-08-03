@@ -44,3 +44,45 @@ MonoBehaviour:
   Apple2: {fileID: 2800000, guid: 7fd8e7799c22cda41aecaecee23caa4c, type: 3}
   Apple3: {fileID: 2800000, guid: e932d0dec22dc7b44aa77ab10c92f53e, type: 3}
   Apple4: {fileID: 2800000, guid: 889aa614e2e47834fa544603200f60fe, type: 3}
+  HoneyPull: {fileID: 8300000, guid: 72d042f83efca384d975977e14f875ea, type: 3}
+  HoneyUlt:
+  - {fileID: 8300000, guid: 7072f27eddfad4f4880c29bee0628f68, type: 3}
+  - {fileID: 8300000, guid: 33e56d05892b7174987c2c992ab91d15, type: 3}
+  HoneyWin:
+  - {fileID: 8300000, guid: de8c94ba1a3b8064abf5936b679816a1, type: 3}
+  - {fileID: 8300000, guid: 1d81526bb5c715d4f8df5a27df78a418, type: 3}
+  - {fileID: 8300000, guid: e174b7857c3b06d49bcf33579c810e5b, type: 3}
+  - {fileID: 8300000, guid: 7eb2e2fb1a8de7d45a35f4dc819b777a, type: 3}
+  HoneyLose:
+  - {fileID: 8300000, guid: adfbca0f5891fad48a6cb0479a2d6d12, type: 3}
+  - {fileID: 8300000, guid: 83be4e9b844bf0445b36fd84cd16143b, type: 3}
+  - {fileID: 8300000, guid: 53877559aaf4be340b7cef914ae32a93, type: 3}
+  - {fileID: 8300000, guid: acff2bac3ba21d648b85ff05fa003446, type: 3}
+  OreoPull: {fileID: 8300000, guid: e9303c7884818a14faa2a0c09a7c06f4, type: 3}
+  OreoUlt:
+  - {fileID: 8300000, guid: ef36f97fd0a7fb742a9d0bbb0d677bd8, type: 3}
+  - {fileID: 8300000, guid: 021dc96cecb48784e8bde987c4a48513, type: 3}
+  - {fileID: 8300000, guid: 88f05fec1438f06488ab371d09967feb, type: 3}
+  OreoWin:
+  - {fileID: 8300000, guid: 50bb7854fbca0ba4397deb2b88c5f19a, type: 3}
+  - {fileID: 8300000, guid: dfd655dc914576f43bc346e5023af37c, type: 3}
+  - {fileID: 8300000, guid: 5e5c937421329434ab705ca0bc5ba8d5, type: 3}
+  OreoLose:
+  - {fileID: 8300000, guid: 3954157bb3e092343a92b748d8c439ce, type: 3}
+  - {fileID: 8300000, guid: a640d8b62a303f242aaf555eff915781, type: 3}
+  - {fileID: 8300000, guid: b548a013a9708b041bf3ba93b280ce52, type: 3}
+  ApplePull: {fileID: 0}
+  AppleUlt: []
+  AppleWin: []
+  AppleLose: []
+  LoopPull: {fileID: 8300000, guid: 6428fa5eb327e9d4eaaea6fe6c21a54a, type: 3}
+  LoopUlt:
+  - {fileID: 8300000, guid: 9b491785326f9284d8f35418d4f186be, type: 3}
+  - {fileID: 8300000, guid: 30a193d9a7b5036488555918e12497f7, type: 3}
+  LoopWin:
+  - {fileID: 8300000, guid: 7a63d4ef8e5c0a64193c472d65084512, type: 3}
+  - {fileID: 8300000, guid: cea2a46bac9b19744ba3cf60f8674f30, type: 3}
+  LoopLose:
+  - {fileID: 8300000, guid: f2198ef24b27c8740a92f79891d37f60, type: 3}
+  - {fileID: 8300000, guid: 27abffaae1f678c48b5e3fb2f2b08f80, type: 3}
+  - {fileID: 8300000, guid: 1bfc3997893e8d34db6d6e876f82213f, type: 3}

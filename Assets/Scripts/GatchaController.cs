@@ -15,6 +15,8 @@ public class GatchaController : MonoBehaviour
     [SerializeField] private TMP_Text _GatchaText;
     [SerializeField] private GameObject _GatchaTextEffect;
     [SerializeField] private GameObject _NextButton;
+    [SerializeField] private AudioSource _GatchaAudio;
+    [SerializeField] private AudioClip _ThreeStarPoop;
 
     private string CatText;
 
@@ -31,11 +33,16 @@ public class GatchaController : MonoBehaviour
             _GatchaCat.mainTexture = _Poop;
             _GatchaLight.color = new Color(0.0f,0.5f,1.0f);
             CatText = "Nothing!";
+            _GatchaAudio.clip = _ThreeStarPoop;
         }
         else if (gatchaRoll <= 0.5)
         {
             // Oreo Cat
             _GatchaCat.mainTexture = _imageLookup.GetNonRaceTexture(InterSceneData.Oreo.Image);
+            if (InterSceneData.Oreo.Level < 1)
+            {
+                _GatchaAudio.clip = _imageLookup.GetAudioPull(InterSceneData.Oreo.Image);
+            }
             if (InterSceneData.Oreo.Level < 4)
             {
                 InterSceneData.Oreo.Level += 1;
@@ -47,6 +54,10 @@ public class GatchaController : MonoBehaviour
         {
             // Honey Cat
             _GatchaCat.mainTexture = _imageLookup.GetNonRaceTexture(InterSceneData.Honey.Image);
+            if (InterSceneData.Honey.Level < 2)
+            {
+                _GatchaAudio.clip = _imageLookup.GetAudioPull(InterSceneData.Honey.Image);
+            }
             if (InterSceneData.Honey.Level < 4)
             {
                 InterSceneData.Honey.Level += 1;
@@ -58,6 +69,10 @@ public class GatchaController : MonoBehaviour
         {
             // Apple Cat
             _GatchaCat.mainTexture = _imageLookup.GetNonRaceTexture(InterSceneData.Apple.Image);
+            if (InterSceneData.Apple.Level < 1)
+            {
+                _GatchaAudio.clip = _imageLookup.GetAudioPull(InterSceneData.Apple.Image);
+            }
             if (InterSceneData.Apple.Level < 4)
             {
                 InterSceneData.Apple.Level += 1;
@@ -69,6 +84,10 @@ public class GatchaController : MonoBehaviour
         {
             // Froot Cat
             _GatchaCat.mainTexture = _imageLookup.GetNonRaceTexture(InterSceneData.Loop.Image);
+            if (InterSceneData.Loop.Level < 1)
+            {
+                _GatchaAudio.clip = _imageLookup.GetAudioPull(InterSceneData.Loop.Image);
+            }
             if (InterSceneData.Loop.Level < 4)
             {
                 InterSceneData.Loop.Level += 1;
@@ -86,6 +105,7 @@ public class GatchaController : MonoBehaviour
         _GatchaText.text = "You Got . . . " + CatText;
         _GatchaTextEffect.SetActive(true);
         _NextButton.SetActive(true);
+        _GatchaAudio.Play();
 
     }
 

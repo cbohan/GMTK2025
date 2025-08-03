@@ -100,6 +100,7 @@ public class RaceManager : MonoBehaviour
                 if (!cat.FinishedRace && cat.IsPlayerControlled)
                 {
                     InterSceneData.PlayerRacePlacement = _aiCatsThatHaveFinishedTheRace;
+                    cat.PlayFinishVoiceLine();
                 }
                 else if (!cat.FinishedRace && !cat.IsPlayerControlled)
                 {

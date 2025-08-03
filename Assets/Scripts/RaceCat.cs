@@ -34,6 +34,7 @@ public class RaceCat : MonoBehaviour
     public MeshRenderer FrontRenderer;
     public MeshRenderer BackRenderer;
     public ImageLookup ImageLookup;
+    public AudioSource VoiceOver;
 
     [HideInInspector] public int Index;
     [HideInInspector] public float CurrentSpeed = 0f;
@@ -48,6 +49,8 @@ public class RaceCat : MonoBehaviour
 
     private float _sugarRushTimer = 0f;
     private float _preSugarRushSpeed;
+
+    private bool _endAudioPlayed = false;
 
     private UltType _ultType;
 
@@ -67,19 +70,31 @@ public class RaceCat : MonoBehaviour
         if (_ultType == UltType.Sticky_Honey)
         {
             RaceManager.Instance.StickyHoney();
+            VoiceOver.Stop();
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Honey.Image);
+            VoiceOver.Play();
         }
         else if (_ultType == UltType.Sugar_Rush)
         {
             _preSugarRushSpeed = CurrentSpeed;
             _sugarRushTimer = SUGAR_RUSH_DURATION;
+            VoiceOver.Stop();
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Oreo.Image);
+            VoiceOver.Play();
         }
         else if (_ultType == UltType.Apple_Jacked)
         {
             CurrentSpeed = MaxSpeed * 2f;
+            VoiceOver.Stop();
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Apple.Image);
+            VoiceOver.Play();
         }
         else if (_ultType == UltType.Chungus_Mode)
         {
             ChungusMultiplier = 1.5f;
+            VoiceOver.Stop();
+            VoiceOver.clip = ImageLookup.GetAudioUlt(InterSceneData.Loop.Image);
+            VoiceOver.Play();
         }
 
         _ultMeter = 0;
@@ -165,8 +180,67 @@ public class RaceCat : MonoBehaviour
     public void AfterFinishMoveForward()
     {
         FinishedRace = true;
-
         VisualsParentTransform.transform.position += VisualsParentTransform.forward * CurrentSpeed * Time.deltaTime; 
+    }
+
+    public void PlayFinishVoiceLine()
+    {
+        if (_endAudioPlayed == false)
+        {
+            _endAudioPlayed = true;
+            if (_ultType == UltType.Sticky_Honey)
+            {
+                VoiceOver.Stop();
+                if (InterSceneData.PlayerRacePlacement == 0)
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioWin(InterSceneData.Honey.Image);
+                }
+                else
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioLose(InterSceneData.Honey.Image);
+                }
+                VoiceOver.Play();
+            }
+            else if (_ultType == UltType.Sugar_Rush)
+            {
+                VoiceOver.Stop();
+                if (InterSceneData.PlayerRacePlacement == 0)
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioWin(InterSceneData.Oreo.Image);
+                }
+                else
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioLose(InterSceneData.Oreo.Image);
+                }
+                VoiceOver.Play();
+            }
+            else if (_ultType == UltType.Apple_Jacked)
+            {
+                VoiceOver.Stop();
+                if (InterSceneData.PlayerRacePlacement == 0)
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioWin(InterSceneData.Apple.Image);
+                }
+                else
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioLose(InterSceneData.Apple.Image);
+                }
+                VoiceOver.Play();
+            }
+            else if (_ultType == UltType.Chungus_Mode)
+            {
+                VoiceOver.Stop();
+                if (InterSceneData.PlayerRacePlacement == 0)
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioWin(InterSceneData.Loop.Image);
+                }
+                else
+                {
+                    VoiceOver.clip = ImageLookup.GetAudioLose(InterSceneData.Loop.Image);
+                }
+                VoiceOver.Play();
+            }
+        }
     }
 
     private void CalculateSpeed()

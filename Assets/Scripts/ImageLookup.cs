@@ -42,6 +42,88 @@ public class ImageLookup : ScriptableObject
     public Texture Apple3;
     public Texture Apple4;
 
+    [Header("Sound Clips")]
+    public AudioClip HoneyPull;
+    public AudioClip[] HoneyUlt;
+    public AudioClip[] HoneyWin;
+    public AudioClip[] HoneyLose;
+    public AudioClip OreoPull;
+    public AudioClip[] OreoUlt;
+    public AudioClip[] OreoWin;
+    public AudioClip[] OreoLose;
+    public AudioClip ApplePull;
+    public AudioClip[] AppleUlt;
+    public AudioClip[] AppleWin;
+    public AudioClip[] AppleLose;
+    public AudioClip LoopPull;
+    public AudioClip[] LoopUlt;
+    public AudioClip[] LoopWin;
+    public AudioClip[] LoopLose;
+
+    public AudioClip GetAudioPull(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyPull;
+            case CatImage.Loop:
+                return LoopPull;
+            case CatImage.Oreo:
+                return OreoPull;
+            case CatImage.Apple:
+            default:
+                return ApplePull;
+        }
+    }
+
+    public AudioClip GetAudioUlt(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyUlt[Random.Range(0,HoneyUlt.Length)];
+            case CatImage.Loop:
+                return LoopUlt[Random.Range(0,LoopUlt.Length)];
+            case CatImage.Oreo:
+                return OreoUlt[Random.Range(0,OreoUlt.Length)];
+            case CatImage.Apple:
+            default:
+                return AppleUlt[Random.Range(0,AppleUlt.Length)];
+        }
+    }
+    
+    public AudioClip GetAudioWin(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyWin[Random.Range(0,HoneyWin.Length)];
+            case CatImage.Loop:
+                return LoopWin[Random.Range(0,LoopWin.Length)];
+            case CatImage.Oreo:
+                return OreoWin[Random.Range(0,OreoWin.Length)];
+            case CatImage.Apple:
+            default:
+                return AppleWin[Random.Range(0,AppleWin.Length)];
+        }
+    }
+    
+    public AudioClip GetAudioLose(CatImage image)
+    {
+        switch (image)
+        {
+            case CatImage.Honey:
+                return HoneyLose[Random.Range(0,HoneyLose.Length)];
+            case CatImage.Loop:
+                return LoopLose[Random.Range(0,LoopLose.Length)];
+            case CatImage.Oreo:
+                return OreoLose[Random.Range(0,OreoLose.Length)];
+            case CatImage.Apple:
+            default:
+                return AppleLose[Random.Range(0,AppleLose.Length)];
+        }
+    }
+
     public Texture GetRaceTexture(CatImage image)
     {
         switch (image)
